@@ -3,12 +3,19 @@ const { app, BrowserWindow, Menu, nativeImage, Tray } = require('electron')
 const path = require('path')
 const isDev = require('electron-is-dev')
 
+const windowOptions = require('./settings')
+
 let mainWindow
 let tray = null
 
 function createWindow() {
-  mainWindow = new BrowserWindow({ width: 350, height: 720 })
+  mainWindow = new BrowserWindow(windowOptions)
   mainWindow.loadURL(isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../build/index.html')}`)
+
+  mainWindow.once('ready-to-show', () => {
+    mainWindow.show()
+  })
+
   mainWindow.on('closed', () => mainWindow = null)
 }
 
