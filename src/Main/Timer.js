@@ -1,6 +1,5 @@
 import React from 'react'
 import classNames from 'classnames'
-// import { ipcRenderer } from 'electron'
 
 import { WORK_TIME, RELAX_TIME } from '../constants'
 

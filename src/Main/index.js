@@ -6,6 +6,7 @@ import Stats from './Stats'
 
 import { WORK_TIME, RELAX_TIME } from '../constants'
 
+const { ipcRenderer } = window.require('electron')
 const startSound = require('../assets/pomodoro-start.mp3')
 const endSound = require('../assets/pomodoro-end.mp3')
 
@@ -87,6 +88,8 @@ export default class Main extends PureComponent {
       const series = getNewSeries(this.state.stage, this.state.series)
 
       this.setState({ stage, total, time, active, series })
+      
+      ipcRenderer.send('change-timer')
 
       if (!active) {
         clearInterval(this.timer)
