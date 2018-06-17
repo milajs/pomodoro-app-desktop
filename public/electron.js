@@ -22,13 +22,14 @@ function createWindow() {
 function createTray() {
   tray = new Tray(nativeImage.createFromPath('public/assets/trayicon.png').resize({ width: 16, height: 16 }))
   const contextMenu = Menu.buildFromTemplate([
-    { label: 'Item1', type: 'radio' },
-    { label: 'Item2', type: 'radio' },
-    { label: 'Item3', type: 'radio', checked: true },
-    { label: 'Item4', type: 'radio' }
+    { label: 'Start', type: 'radio' },
+    { label: 'Pause', type: 'radio' },
+    { label: 'Reset', type: 'radio' },
+    { label: 'Skip break', type: 'radio' }
   ])
   tray.setToolTip('This is my application.')
   tray.setContextMenu(contextMenu)
+  tray.setTitle('25:00')
 }
 
 app.on('ready', () => {
@@ -40,6 +41,10 @@ app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit()
   }
+})
+
+app.on('change-timer', () => {
+  tray.setTitle('by event')
 })
 
 app.on('activate', () => {
