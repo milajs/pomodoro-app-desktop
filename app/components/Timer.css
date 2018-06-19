@@ -1,0 +1,34 @@
+.rotate90 {
+  transform: rotate(-90deg);
+}
+
+.timer {
+  position: absolute;
+  margin-top: 27px;
+  width: 205px;
+  height: 205px;
+  border-radius: 100px;
+  background: rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+}
+
+.startButton {
+  background: rgba(255, 255, 255, 0.15);
+  padding: 15px 30px 13px;
+  border-radius: 10px;
+  font-size: 22px;
+  margin: 30px auto 20px;
+}
+
+.startButton img {
+  width: 24px;
+  height: 24px;
+}
+
+.playOffset {
+  margin-right: -2px;
+  margin-left: 2px;
+}
