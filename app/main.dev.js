@@ -12,6 +12,7 @@
  */
 import { app, BrowserWindow } from 'electron'
 import MenuBuilder from './menu'
+import settings from './settings'
 
 let mainWindow = null
 
@@ -58,11 +59,7 @@ app.on('ready', async () => {
     await installExtensions()
   }
 
-  mainWindow = new BrowserWindow({
-    show: false,
-    width: 1024,
-    height: 728
-  })
+  mainWindow = new BrowserWindow(settings)
 
   mainWindow.loadURL(`file://${__dirname}/app.html`)
 
