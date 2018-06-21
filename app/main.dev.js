@@ -10,11 +10,12 @@
  *
  * @flow
  */
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, Menu, nativeImage, Tray } from 'electron'
 import MenuBuilder from './menu'
 import settings from './settings'
 
 let mainWindow = null
+let tray = null
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support')
@@ -39,6 +40,45 @@ const installExtensions = async () => {
   return Promise.all(extensions.map(name => installer.default(installer[name], forceDownload)))
 }
 
+function createTray() {
+  tray = new Tray(nativeImage.createFromPath('app/assets/trayicon.png').resize({ width: 16, height: 16 }))
+  const contextMenu = Menu.buildFromTemplate([
+    {
+      label: 'Start',
+      accelerator: 'Command+S',
+      selector: 'start:'
+    },
+    { label: 'Pause' },
+    { label: 'Reset' },
+    { label: 'Skip break' },
+    { label: 'Exit', role: 'quit' }
+  ])
+
+  tray.setToolTip('This is my application.')
+  tray.setContextMenu(contextMenu)
+  tray.setTitle('25:00')
+}
+
+function createWindow() {
+  mainWindow = new BrowserWindow(settings)
+
+  mainWindow.loadURL(`file://${__dirname}/app.html`)
+
+  // @TODO: Use 'ready-to-show' event
+  //        https://github.com/electron/electron/blob/master/docs/api/browser-window.md#using-ready-to-show-event
+  mainWindow.webContents.on('did-finish-load', () => {
+    if (!mainWindow) {
+      throw new Error('"mainWindow" is not defined')
+    }
+    mainWindow.show()
+    mainWindow.focus()
+  })
+
+  mainWindow.on('closed', () => {
+    mainWindow = null
+  })
+}
+
 /**
  * Add event listeners...
  */
@@ -59,23 +99,8 @@ app.on('ready', async () => {
     await installExtensions()
   }
 
-  mainWindow = new BrowserWindow(settings)
-
-  mainWindow.loadURL(`file://${__dirname}/app.html`)
-
-  // @TODO: Use 'ready-to-show' event
-  //        https://github.com/electron/electron/blob/master/docs/api/browser-window.md#using-ready-to-show-event
-  mainWindow.webContents.on('did-finish-load', () => {
-    if (!mainWindow) {
-      throw new Error('"mainWindow" is not defined')
-    }
-    mainWindow.show()
-    mainWindow.focus()
-  })
-
-  mainWindow.on('closed', () => {
-    mainWindow = null
-  })
+  createTray()
+  createWindow()
 
   const menuBuilder = new MenuBuilder(mainWindow)
   menuBuilder.buildMenu()
