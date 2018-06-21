@@ -1,12 +1,11 @@
 // @flow
-import React, { Component } from 'react';
-import { Provider } from 'react-redux';
-import { ConnectedRouter } from 'react-router-redux';
+import React, { Component } from 'react'
+import { Provider } from 'react-redux'
+import { ConnectedRouter } from 'react-router-redux'
 
-import Routes from '../routes';
+import Routes from '../routes'
 
-export default class Root extends Component {
-  // eslint-disable-line
+export default class Root extends Component { // eslint-disable-line
   render() {
     return (
       <Provider store={this.props.store}>
@@ -14,6 +13,6 @@ export default class Root extends Component {
           <Routes />
         </ConnectedRouter>
       </Provider>
-    );
+    )
   }
 }
