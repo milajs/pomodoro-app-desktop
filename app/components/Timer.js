@@ -1,35 +1,27 @@
-import React from 'react';
+import React from 'react'
 
-import styles from './Timer.css';
+import styles from './Timer.css'
 
-import { WORK_TIME, RELAX_TIME } from '../constants';
+import formatTimeToString from '../utils/timer'
 
-const playIcon = require('../assets/play.png');
-const pauseIcon = require('../assets/pause.png');
+import { WORK_TIME, RELAX_TIME } from '../constants'
 
-function getTime(time) {
-  const minutes = Math.floor(time / 60);
-  const seconds = time % 60;
-  const formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
+const playIcon = require('../assets/play.png')
+const pauseIcon = require('../assets/pause.png')
 
-  return `${minutes}:${formattedSeconds}`;
-}
-
-const VIEW_SIDE = 260;
-const CENTER = VIEW_SIDE / 2;
-const RADIUS = 121;
-const CIRCLE_LENGHT = 2 * Math.PI * RADIUS;
+const VIEW_SIDE = 260
+const CENTER = VIEW_SIDE / 2
+const RADIUS = 121
+const CIRCLE_LENGHT = 2 * Math.PI * RADIUS
 
 export default function Timer({ active, time, stage, toggleTimer }) {
-  const src = active ? pauseIcon : playIcon;
-  const formattedTime = getTime(time);
+  const src = active ? pauseIcon : playIcon
+  const formattedTime = formatTimeToString(time)
 
-  // ipcRenderer.send('change-timer', formattedTime)
+  const fullTime = stage === 'work' ? WORK_TIME : RELAX_TIME
+  const progress = time / fullTime
 
-  const fullTime = stage === 'work' ? WORK_TIME : RELAX_TIME;
-  const progress = time / fullTime;
-
-  const strokeColor = stage === 'work' ? '#EF5350' : '#00BFA5';
+  const strokeColor = stage === 'work' ? '#EF5350' : '#00BFA5'
 
   return [
     <svg
@@ -75,5 +67,5 @@ export default function Timer({ active, time, stage, toggleTimer }) {
     <button className={styles.startButton} onClick={toggleTimer} key="button">
       <img src={src} alt="play" className={active ? '' : styles.playOffset} />
     </button>
-  ];
+  ]
 }

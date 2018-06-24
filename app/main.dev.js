@@ -10,7 +10,7 @@
  *
  * @flow
  */
-import { app, BrowserWindow, Menu, nativeImage, Tray } from 'electron'
+import { app, BrowserWindow, ipcMain, Menu, nativeImage, Tray } from 'electron'
 import MenuBuilder from './menu'
 import settings from './settings'
 
@@ -41,7 +41,7 @@ const installExtensions = async () => {
 }
 
 function createTray() {
-  tray = new Tray(nativeImage.createFromPath('app/assets/trayicon.png').resize({ width: 16, height: 16 }))
+  tray = new Tray(nativeImage.createFromPath('app/assets/tray_icon.png').resize({ width: 16, height: 16 }))
   const contextMenu = Menu.buildFromTemplate([
     {
       label: 'Start',
@@ -60,7 +60,10 @@ function createTray() {
 }
 
 function createWindow() {
-  mainWindow = new BrowserWindow(settings)
+  mainWindow = new BrowserWindow({
+    ...settings,
+    icon: nativeImage.createFromPath('app/assets/app_icon.png')
+  })
 
   mainWindow.loadURL(`file://${__dirname}/app.html`)
 
@@ -82,6 +85,10 @@ function createWindow() {
 /**
  * Add event listeners...
  */
+
+ipcMain.on('update-tray-title', (event, title) => {
+  tray.setTitle(title)
+})
 
 app.on('window-all-closed', () => {
   // Respect the OSX convention of having the application in memory even

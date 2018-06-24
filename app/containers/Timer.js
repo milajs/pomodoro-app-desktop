@@ -1,7 +1,10 @@
 import React, { PureComponent } from 'react'
+import { ipcRenderer } from 'electron'
 
 import Timer from '../Components/Timer'
 import Stats from '../Components/Stats'
+
+import formatTimeToString from '../utils/timer'
 
 import { WORK_TIME, RELAX_TIME } from '../constants'
 
@@ -91,7 +94,10 @@ export default class MainContainer extends PureComponent {
         clearInterval(this.timer)
       }
     } else {
-      this.setState({ time: this.state.time - 1 })
+      const newTime = this.state.time - 1
+      this.setState({ time: newTime }, () => {
+        ipcRenderer.send('update-tray-title', formatTimeToString(newTime))
+      })
     }
   }
 }
