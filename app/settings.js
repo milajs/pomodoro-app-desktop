@@ -7,6 +7,6 @@ export default {
   title: 'Pomodoro App',
   titleBarStyle: 'hidden',
   webPreferences: {
-    // devTools: false
+    devTools: false
   }
 }

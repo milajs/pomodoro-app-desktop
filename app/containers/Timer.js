@@ -36,6 +36,12 @@ export default class MainContainer extends PureComponent {
     }
   }
 
+  componentDidMount() {
+    ipcRenderer.on('toggle-timer', () => {
+      this.toggleTimer()
+    })
+  }
+
   render() {
     const { stage } = this.state
 

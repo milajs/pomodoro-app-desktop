@@ -40,25 +40,6 @@ const installExtensions = async () => {
   return Promise.all(extensions.map(name => installer.default(installer[name], forceDownload)))
 }
 
-function createTray() {
-  tray = new Tray(nativeImage.createFromPath('app/assets/tray_icon.png').resize({ width: 16, height: 16 }))
-  const contextMenu = Menu.buildFromTemplate([
-    {
-      label: 'Start',
-      accelerator: 'Command+S',
-      selector: 'start:'
-    },
-    { label: 'Pause' },
-    { label: 'Reset' },
-    { label: 'Skip break' },
-    { label: 'Exit', role: 'quit' }
-  ])
-
-  tray.setToolTip('This is my application.')
-  tray.setContextMenu(contextMenu)
-  tray.setTitle('25:00')
-}
-
 function createWindow() {
   mainWindow = new BrowserWindow({
     ...settings,
@@ -80,6 +61,28 @@ function createWindow() {
   mainWindow.on('closed', () => {
     mainWindow = null
   })
+}
+
+function createTray() {
+  tray = new Tray(nativeImage.createFromPath('app/assets/tray_icon.png').resize({ width: 16, height: 16 }))
+  const contextMenu = Menu.buildFromTemplate([
+    {
+      label: 'Start',
+      accelerator: 'Command+S',
+      selector: 'start:',
+      click: () => {
+        mainWindow.webContents.send('toggle-timer')
+      }
+    },
+    { label: 'Pause' },
+    { label: 'Reset' },
+    { label: 'Skip break' },
+    { label: 'Exit', role: 'quit' }
+  ])
+
+  tray.setToolTip('This is my application.')
+  tray.setContextMenu(contextMenu)
+  tray.setTitle('25:00')
 }
 
 /**
