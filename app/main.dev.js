@@ -74,8 +74,14 @@ function createTray() {
         mainWindow.webContents.send('toggle-timer')
       }
     },
-    { label: 'Pause' },
-    { label: 'Reset' },
+    {
+      label: 'Reset',
+      accelerator: 'Command+R',
+      selector: 'reset:',
+      click: () => {
+        mainWindow.webContents.send('reset-timer')
+      }
+    },
     { label: 'Skip break' },
     { label: 'Exit', role: 'quit' }
   ])

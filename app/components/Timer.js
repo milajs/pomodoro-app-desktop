@@ -2,7 +2,7 @@ import React from 'react'
 
 import styles from './Timer.css'
 
-import formatTimeToString from '../utils/timer'
+import { formatTimeToString } from '../utils/timer'
 
 import { WORK_TIME, RELAX_TIME } from '../constants'
 

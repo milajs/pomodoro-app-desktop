@@ -4,41 +4,35 @@ import { ipcRenderer } from 'electron'
 import Timer from '../Components/Timer'
 import Stats from '../Components/Stats'
 
-import formatTimeToString from '../utils/timer'
+import { formatTimeToString, getNewSeries } from '../utils/timer'
 
 import { WORK_TIME, RELAX_TIME } from '../constants'
 
 const startSound = require('../assets/pomodoro-start.mp3')
 const endSound = require('../assets/pomodoro-end.mp3')
 
-function getNewSeries(prevStage, prevSeries) {
-  if (prevSeries === 4 && prevStage === 'relax') {
-    return 0
-  }
-
-  if (prevStage === 'work') {
-    return prevSeries + 1
-  }
-
-  return prevSeries
+const initialState = {
+  series: 0,
+  total: 0,
+  active: false,
+  time: WORK_TIME,
+  stage: 'work'
 }
 
 export default class MainContainer extends PureComponent {
   constructor(props) {
     super(props)
 
-    this.state = {
-      series: 0,
-      total: 0,
-      active: false,
-      time: WORK_TIME,
-      stage: 'work'
-    }
+    this.state = initialState
   }
 
   componentDidMount() {
     ipcRenderer.on('toggle-timer', () => {
       this.toggleTimer()
+    })
+
+    ipcRenderer.on('reset-timer', () => {
+      this.resetTimer()
     })
   }
 
@@ -105,5 +99,9 @@ export default class MainContainer extends PureComponent {
         ipcRenderer.send('update-tray-title', formatTimeToString(newTime))
       })
     }
+  }
+
+  resetTimer = () => {
+    this.setState(initialState)
   }
 }
