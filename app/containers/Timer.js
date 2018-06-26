@@ -64,11 +64,14 @@ export default class MainContainer extends PureComponent {
   toggleTimer = () => {
     this.setState({ active: !this.state.active }, () => {
       if (this.state.active) {
+        ipcRenderer.send('update-workt-status', 'Pause')
+
         if (this.state.time === WORK_TIME) {
           document.getElementById('audio-start').play()
         }
         this.timer = setInterval(this.tick, 1000)
       } else {
+        ipcRenderer.send('update-workt-status', 'Start')
         clearInterval(this.timer)
       }
     })

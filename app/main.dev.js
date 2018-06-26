@@ -63,28 +63,31 @@ function createWindow() {
   })
 }
 
+const menuItems = [
+  {
+    label: 'Start',
+    accelerator: 'Command+S',
+    selector: 'start:',
+    click: () => {
+      mainWindow.webContents.send('toggle-timer')
+    }
+  },
+  {
+    label: 'Reset',
+    accelerator: 'Command+R',
+    selector: 'reset:',
+    click: () => {
+      mainWindow.webContents.send('reset-timer')
+    }
+  },
+  { label: 'Skip break' },
+  { label: 'Exit', role: 'quit' }
+]
+
 function createTray() {
   tray = new Tray(nativeImage.createFromPath('app/assets/tray_icon.png').resize({ width: 16, height: 16 }))
-  const contextMenu = Menu.buildFromTemplate([
-    {
-      label: 'Start',
-      accelerator: 'Command+S',
-      selector: 'start:',
-      click: () => {
-        mainWindow.webContents.send('toggle-timer')
-      }
-    },
-    {
-      label: 'Reset',
-      accelerator: 'Command+R',
-      selector: 'reset:',
-      click: () => {
-        mainWindow.webContents.send('reset-timer')
-      }
-    },
-    { label: 'Skip break' },
-    { label: 'Exit', role: 'quit' }
-  ])
+
+  const contextMenu = Menu.buildFromTemplate(menuItems)
 
   tray.setToolTip('This is my application.')
   tray.setContextMenu(contextMenu)
@@ -97,6 +100,15 @@ function createTray() {
 
 ipcMain.on('update-tray-title', (event, title) => {
   tray.setTitle(title)
+})
+
+ipcMain.on('update-workt-status', (event, label) => {
+  console.log(label)
+  menuItems[0].label = label
+
+  const contextMenu = Menu.buildFromTemplate(menuItems)
+
+  tray.setContextMenu(contextMenu)
 })
 
 app.on('window-all-closed', () => {
