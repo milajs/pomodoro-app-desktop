@@ -102,13 +102,13 @@ ipcMain.on('update-tray-title', (event, title) => {
   tray.setTitle(title)
 })
 
-ipcMain.on('update-workt-status', (event, label) => {
-  console.log(label)
+ipcMain.on('update-workt-status', (event, label, time) => {
   menuItems[0].label = label
 
   const contextMenu = Menu.buildFromTemplate(menuItems)
 
   tray.setContextMenu(contextMenu)
+  tray.setTitle(time)
 })
 
 app.on('window-all-closed', () => {
