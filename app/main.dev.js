@@ -10,7 +10,7 @@
  *
  * @flow
  */
-import { app, BrowserWindow, ipcMain, Menu, nativeImage, Tray } from 'electron'
+import { app, BrowserWindow, globalShortcut, ipcMain, Menu, nativeImage, Tray } from 'electron'
 import MenuBuilder from './menu'
 import settings from './settings'
 
@@ -66,7 +66,7 @@ function createWindow() {
 const menuItems = [
   {
     label: 'Start',
-    accelerator: 'Command+S',
+    accelerator: 'Cmd+S',
     selector: 'start:',
     click: () => {
       mainWindow.webContents.send('toggle-timer')
@@ -74,7 +74,7 @@ const menuItems = [
   },
   {
     label: 'Reset',
-    accelerator: 'Command+R',
+    accelerator: 'Cmd+R',
     selector: 'reset:',
     click: () => {
       mainWindow.webContents.send('reset-timer')
@@ -132,4 +132,12 @@ app.on('ready', async () => {
 
   const menuBuilder = new MenuBuilder(mainWindow)
   menuBuilder.buildMenu()
+
+  globalShortcut.register('CommandOrControl+S', () => {
+    mainWindow.webContents.send('toggle-timer')
+  })
+
+  globalShortcut.register('CommandOrControl+R', () => {
+    mainWindow.webContents.send('reset-timer')
+  })
 })
