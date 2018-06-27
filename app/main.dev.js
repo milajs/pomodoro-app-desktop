@@ -40,6 +40,21 @@ const installExtensions = async () => {
   return Promise.all(extensions.map(name => installer.default(installer[name], forceDownload)))
 }
 
+function registerShortcuts() {
+  globalShortcut.register('CommandOrControl+S', () => {
+    mainWindow.webContents.send('toggle-timer')
+  })
+
+  globalShortcut.register('CommandOrControl+R', () => {
+    mainWindow.webContents.send('reset-timer')
+  })
+}
+
+function unregisterShortcuts() {
+  globalShortcut.unregister('CommandOrControl+S')
+  globalShortcut.unregister('CommandOrControl+R')
+}
+
 function createWindow() {
   mainWindow = new BrowserWindow({
     ...settings,
@@ -48,14 +63,20 @@ function createWindow() {
 
   mainWindow.loadURL(`file://${__dirname}/app.html`)
 
-  // @TODO: Use 'ready-to-show' event
-  //        https://github.com/electron/electron/blob/master/docs/api/browser-window.md#using-ready-to-show-event
-  mainWindow.webContents.on('did-finish-load', () => {
+  mainWindow.on('ready-to-show', () => {
     if (!mainWindow) {
       throw new Error('"mainWindow" is not defined')
     }
     mainWindow.show()
     mainWindow.focus()
+  })
+
+  mainWindow.on('focus', () => {
+    registerShortcuts()
+  })
+
+  mainWindow.on('blur', () => {
+    unregisterShortcuts()
   })
 
   mainWindow.on('closed', () => {
@@ -133,11 +154,7 @@ app.on('ready', async () => {
   const menuBuilder = new MenuBuilder(mainWindow)
   menuBuilder.buildMenu()
 
-  globalShortcut.register('CommandOrControl+S', () => {
-    mainWindow.webContents.send('toggle-timer')
-  })
-
-  globalShortcut.register('CommandOrControl+R', () => {
-    mainWindow.webContents.send('reset-timer')
+  globalShortcut.register('CommandOrControl+P', () => {
+    mainWindow.focus()
   })
 })
