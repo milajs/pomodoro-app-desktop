@@ -15,12 +15,23 @@
   font-size: 40px;
 }
 
-.startButton {
-  background: rgba(255, 255, 255, 0.15);
-  padding: 15px 30px 13px;
-  border-radius: 10px;
-  font-size: 22px;
+.btnsRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 220px;
   margin: 30px auto 20px;
+}
+
+.startButton {
+  width: 90px;
+  min-height: 55px;
+  margin: 0 10px;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 0 10px;
+  border-radius: 10px;
+  font-size: 16px;
+  color: white;
 }
 
 .startButton img {
@@ -31,4 +42,18 @@
 .playOffset {
   margin-right: -2px;
   margin-left: 2px;
+}
+
+.skipBtn {
+  animation: slideIn 0.3s
+}
+
+@keyframes slideIn {
+  from {
+    margin-right: -50%;
+  }
+
+  to {
+    margin-left: 10px;
+  }
 }

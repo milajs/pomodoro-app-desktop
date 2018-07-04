@@ -46,6 +46,7 @@ export default class MainContainer extends PureComponent {
             time={this.state.time}
             stage={this.state.stage}
             active={this.state.active}
+            skipBreak={this.skipBreak}
             toggleTimer={this.toggleTimer}
           />
 
@@ -66,7 +67,7 @@ export default class MainContainer extends PureComponent {
 
     this.setState({ active: !this.state.active }, () => {
       if (this.state.active) {
-        ipcRenderer.send('update-workt-status', 'Pause', time)
+        ipcRenderer.send('update-workt-status', 'Stop', time)
 
         if (this.state.time === WORK_TIME) {
           document.getElementById('audio-start').play()
@@ -76,6 +77,16 @@ export default class MainContainer extends PureComponent {
         ipcRenderer.send('update-workt-status', 'Start', time)
         clearInterval(this.timer)
       }
+    })
+  }
+
+  skipBreak = () => {
+    clearInterval(this.timer)
+
+    this.setState({
+      active: false,
+      time: WORK_TIME,
+      stage: 'work'
     })
   }
 

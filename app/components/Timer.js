@@ -14,7 +14,7 @@ const CENTER = VIEW_SIDE / 2
 const RADIUS = 121
 const CIRCLE_LENGHT = 2 * Math.PI * RADIUS
 
-export default function Timer({ active, time, stage, toggleTimer }) {
+export default function Timer({ active, time, stage, toggleTimer, skipBreak }) {
   const src = active ? pauseIcon : playIcon
   const formattedTime = formatTimeToString(time)
 
@@ -64,8 +64,16 @@ export default function Timer({ active, time, stage, toggleTimer }) {
       <p>{formattedTime}</p>
     </div>,
 
-    <button className={styles.startButton} onClick={toggleTimer} key="button">
-      <img src={src} alt="play" className={active ? '' : styles.playOffset} />
-    </button>
+    <div key="buttons" className={styles.btnsRow}>
+      <button className={styles.startButton} onClick={toggleTimer}>
+        <img src={src} alt="play" className={active ? '' : styles.playOffset} />
+      </button>
+
+      {stage === 'relax' && (
+        <button className={`${styles.startButton} ${styles.skipBtn}`} onClick={skipBreak}>
+          Skip break
+        </button>
+      )}
+    </div>
   ]
 }
