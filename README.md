@@ -10,7 +10,7 @@ cd pomodoro-app-desktop
 yarn && yarn dev
 ```
 
-### Package release
+## Package release
 
 Only local platform
 ```
