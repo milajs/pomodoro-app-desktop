@@ -1,5 +1,14 @@
-import React from 'react'
+import * as React from 'react';
 
-export default () => ( // eslint-disable-line
-  <div>{this.props.children}</div>
-)
+type Props = {
+  children: React.Node
+};
+
+export default class App extends React.Component<Props> {
+  // eslint-disable-line
+  render() {
+    return <div>{this.props.children}</div>;
+  }
+
+  props: Props;
+}
