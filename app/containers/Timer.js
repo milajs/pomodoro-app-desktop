@@ -6,7 +6,7 @@ import Stats from '../Components/Stats';
 
 import { formatTimeToString, getNewSeries } from '../utils/timer';
 
-import { WORK_TIME, RELAX_TIME } from '../constants';
+import { WORK_TIME, RELAX_TIME, WORK_TIME_TEXT } from '../constants';
 
 const startSound = require('../assets/pomodoro-start.mp3');
 const endSound = require('../assets/pomodoro-end.mp3');
@@ -117,7 +117,7 @@ export default class MainContainer extends PureComponent {
   resetTimer = () => {
     this.setState(initialState, () => {
       clearInterval(this.timer);
-      ipcRenderer.send('update-tray-title', '25:00');
+      ipcRenderer.send('update-tray-title', WORK_TIME_TEXT);
     });
   };
 }
