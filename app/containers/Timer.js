@@ -34,6 +34,10 @@ export default class MainContainer extends PureComponent {
     ipcRenderer.on('reset-timer', () => {
       this.resetTimer();
     });
+
+    ipcRenderer.on('skip-break', () => {
+      this.skipBreak();
+    });
   }
 
   render() {
@@ -78,13 +82,17 @@ export default class MainContainer extends PureComponent {
   };
 
   skipBreak = () => {
-    clearInterval(this.timer);
-
-    this.setState({
-      active: false,
-      time: WORK_TIME,
-      stage: 'work'
-    });
+    this.setState(
+      {
+        active: false,
+        time: WORK_TIME,
+        stage: 'work'
+      },
+      () => {
+        clearInterval(this.timer);
+        ipcRenderer.send('update-tray-title', WORK_TIME_TEXT);
+      }
+    );
   };
 
   tick = () => {

@@ -112,7 +112,12 @@ const menuItems = [
       mainWindow.webContents.send('reset-timer');
     }
   },
-  { label: 'Skip break' },
+  {
+    label: 'Skip break',
+    click: () => {
+      mainWindow.webContents.send('skip-break');
+    }
+  },
   { label: 'Exit', role: 'quit' }
 ];
 
