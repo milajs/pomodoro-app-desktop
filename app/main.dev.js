@@ -117,7 +117,7 @@ const menuItems = [
     }
   },
   { label: 'Exit', role: 'quit' }
-];
+]
 
 function createTray() {
   tray = new Tray(nativeImage
@@ -142,7 +142,7 @@ ipcMain.on('update-tray-title', (event, title) => {
 ipcMain.on('update-workt-status', (event, label, time) => {
   menuItems[0].label = label
 
-  const contextMenu = Menu.buildFromTemplate(menuItems);
+  const contextMenu = Menu.buildFromTemplate(menuItems)
 
   tray.setContextMenu(contextMenu)
   tray.setTitle(time)
