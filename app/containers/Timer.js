@@ -1,15 +1,15 @@
-import React, { PureComponent } from 'react';
-import { ipcRenderer } from 'electron';
+import React, { PureComponent } from 'react'
+import { ipcRenderer } from 'electron'
 
-import Timer from '../Components/Timer';
-import Stats from '../Components/Stats';
+import Timer from '../Components/Timer'
+import Stats from '../Components/Stats'
 
-import { formatTimeToString, getNewSeries } from '../utils/timer';
+import { formatTimeToString, getNewSeries } from '../utils/timer'
 
-import { WORK_TIME, RELAX_TIME, WORK_TIME_TEXT } from '../constants';
+import { WORK_TIME, RELAX_TIME, WORK_TIME_TEXT } from '../constants'
 
-const startSound = require('../assets/pomodoro-start.mp3');
-const endSound = require('../assets/pomodoro-end.mp3');
+const startSound = require('../assets/pomodoro-start.mp3')
+const endSound = require('../assets/pomodoro-end.mp3')
 
 const initialState = {
   series: 0,
@@ -17,7 +17,7 @@ const initialState = {
   active: false,
   time: WORK_TIME,
   stage: 'work'
-};
+}
 
 export default class MainContainer extends PureComponent {
   constructor(props) {
@@ -70,15 +70,16 @@ export default class MainContainer extends PureComponent {
       if (this.state.active) {
         ipcRenderer.send('update-workt-status', 'Stop', time)
 
-        if (this.state.time === WORK_TIME) {
-          document.getElementById('audio-start').play()
-        }
+        // if (this.state.time === WORK_TIME) {
+        //   document.getElementById('audio-start').play()
+        // }
+
         this.timer = setInterval(this.tick, 1000)
       } else {
         ipcRenderer.send('update-workt-status', 'Start', time)
         clearInterval(this.timer)
       }
-    });
+    })
   };
 
   skipBreak = () => {
@@ -89,10 +90,10 @@ export default class MainContainer extends PureComponent {
         stage: 'work'
       },
       () => {
-        clearInterval(this.timer);
+        clearInterval(this.timer)
         ipcRenderer.send('update-tray-title', WORK_TIME_TEXT)
       }
-    );
+    )
   };
 
   tick = () => {
@@ -118,7 +119,7 @@ export default class MainContainer extends PureComponent {
       const newTime = this.state.time - 1
       this.setState({ time: newTime }, () => {
         ipcRenderer.send('update-tray-title', formatTimeToString(newTime))
-      });
+      })
     }
   };
 
