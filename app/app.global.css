@@ -11,12 +11,15 @@ body {
   color: white;
   height: 100vh;
   font-family: Arial, Helvetica, Helvetica Neue, serif;
+  -webkit-user-select: none;
+  -webkit-app-region: drag;
 }
 
 button {
   border: none;
   outline: none;
   cursor: pointer;
+  -webkit-app-region: no-drag;
 }
 
 .container {
