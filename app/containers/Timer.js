@@ -21,27 +21,27 @@ const initialState = {
 
 export default class MainContainer extends PureComponent {
   constructor(props) {
-    super(props);
+    super(props)
 
-    this.state = initialState;
+    this.state = initialState
   }
 
   componentDidMount() {
     ipcRenderer.on('toggle-timer', () => {
-      this.toggleTimer();
-    });
+      this.toggleTimer()
+    })
 
     ipcRenderer.on('reset-timer', () => {
-      this.resetTimer();
-    });
+      this.resetTimer()
+    })
 
     ipcRenderer.on('skip-break', () => {
-      this.skipBreak();
-    });
+      this.skipBreak()
+    })
   }
 
   render() {
-    const { stage } = this.state;
+    const { stage } = this.state
 
     return (
       <div className={`container background-${stage}`}>
@@ -60,23 +60,23 @@ export default class MainContainer extends PureComponent {
           <audio id="audio-start" src={startSound} autostart="false" />
         </div>
       </div>
-    );
+    )
   }
 
   toggleTimer = () => {
-    const time = formatTimeToString(this.state.time);
+    const time = formatTimeToString(this.state.time)
 
     this.setState({ active: !this.state.active }, () => {
       if (this.state.active) {
-        ipcRenderer.send('update-workt-status', 'Stop', time);
+        ipcRenderer.send('update-workt-status', 'Stop', time)
 
         if (this.state.time === WORK_TIME) {
-          document.getElementById('audio-start').play();
+          document.getElementById('audio-start').play()
         }
-        this.timer = setInterval(this.tick, 1000);
+        this.timer = setInterval(this.tick, 1000)
       } else {
-        ipcRenderer.send('update-workt-status', 'Start', time);
-        clearInterval(this.timer);
+        ipcRenderer.send('update-workt-status', 'Start', time)
+        clearInterval(this.timer)
       }
     });
   };
@@ -90,42 +90,42 @@ export default class MainContainer extends PureComponent {
       },
       () => {
         clearInterval(this.timer);
-        ipcRenderer.send('update-tray-title', WORK_TIME_TEXT);
+        ipcRenderer.send('update-tray-title', WORK_TIME_TEXT)
       }
     );
   };
 
   tick = () => {
     if (this.state.time === 0) {
-      const isPomodoroEnd = this.state.stage === 'work';
+      const isPomodoroEnd = this.state.stage === 'work'
 
       if (isPomodoroEnd) {
-        document.getElementById('audio-end').play();
+        document.getElementById('audio-end').play()
       }
 
-      const stage = isPomodoroEnd ? 'relax' : 'work';
-      const active = isPomodoroEnd;
-      const total = isPomodoroEnd ? this.state.total + 1 : this.state.total;
-      const time = isPomodoroEnd ? RELAX_TIME : WORK_TIME;
-      const series = getNewSeries(this.state.stage, this.state.series);
+      const stage = isPomodoroEnd ? 'relax' : 'work'
+      const active = isPomodoroEnd
+      const total = isPomodoroEnd ? this.state.total + 1 : this.state.total
+      const time = isPomodoroEnd ? RELAX_TIME : WORK_TIME
+      const series = getNewSeries(this.state.stage, this.state.series)
 
-      this.setState({ stage, total, time, active, series });
+      this.setState({ stage, total, time, active, series })
 
       if (!active) {
-        clearInterval(this.timer);
+        clearInterval(this.timer)
       }
     } else {
-      const newTime = this.state.time - 1;
+      const newTime = this.state.time - 1
       this.setState({ time: newTime }, () => {
-        ipcRenderer.send('update-tray-title', formatTimeToString(newTime));
+        ipcRenderer.send('update-tray-title', formatTimeToString(newTime))
       });
     }
   };
 
   resetTimer = () => {
     this.setState(initialState, () => {
-      clearInterval(this.timer);
-      ipcRenderer.send('update-tray-title', WORK_TIME_TEXT);
-    });
+      clearInterval(this.timer)
+      ipcRenderer.send('update-tray-title', WORK_TIME_TEXT)
+    })
   };
 }
