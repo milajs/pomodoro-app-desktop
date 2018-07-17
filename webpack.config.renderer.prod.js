@@ -146,10 +146,20 @@ export default merge.smart(baseConfig, {
           }
         }
       },
+      {
+        test: /\.png(\?v=\d+\.\d+\.\d+)?$/,
+        use: {
+          loader: 'url-loader',
+          options: {
+            limit: 10000,
+            mimetype: 'image/png'
+          }
+        }
+      },
       // Common Image Formats
       {
         test: /\.(?:ico|gif|png|mp3|jpg|jpeg|webp)$/,
-        use: 'url-loader'
+        use: `url-loader?limit=10000000`
       }
     ]
   },

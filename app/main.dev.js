@@ -18,81 +18,79 @@ import {
   Menu,
   nativeImage,
   Tray
-} from 'electron';
-import MenuBuilder from './menu';
-import settings from './settings';
-import { WORK_TIME_TEXT } from './constants';
+} from 'electron'
+import MenuBuilder from './menu'
+import settings from './settings'
+import { WORK_TIME_TEXT } from './constants'
 
-let mainWindow = null;
-let tray = null;
+let mainWindow = null
+let tray = null
 
 if (process.env.NODE_ENV === 'production') {
-  const sourceMapSupport = require('source-map-support');
-  sourceMapSupport.install();
+  const sourceMapSupport = require('source-map-support')
+  sourceMapSupport.install()
 }
 
 if (
   process.env.NODE_ENV === 'development' ||
   process.env.DEBUG_PROD === 'true'
 ) {
-  require('electron-debug')();
-  const path = require('path');
-  const p = path.join(__dirname, '..', 'app', 'node_modules');
-  require('module').globalPaths.push(p);
+  require('electron-debug')()
+  const path = require('path')
+  const p = path.join(__dirname, '..', 'app', 'node_modules')
+  require('module').globalPaths.push(p)
 }
 
 const installExtensions = async () => {
-  const installer = require('electron-devtools-installer');
-  const forceDownload = !!process.env.UPGRADE_EXTENSIONS;
-  const extensions = ['REACT_DEVELOPER_TOOLS', 'REDUX_DEVTOOLS'];
+  const installer = require('electron-devtools-installer')
+  const forceDownload = !!process.env.UPGRADE_EXTENSIONS
+  const extensions = ['REACT_DEVELOPER_TOOLS', 'REDUX_DEVTOOLS']
 
-  return Promise.all(
-    extensions.map(name => installer.default(installer[name], forceDownload))
-  );
-};
+  return Promise.all(extensions.map(name => installer.default(installer[name], forceDownload)))
+}
 
 function registerShortcuts() {
   globalShortcut.register('CommandOrControl+S', () => {
-    mainWindow.webContents.send('toggle-timer');
-  });
+    mainWindow.webContents.send('toggle-timer')
+  })
 
   globalShortcut.register('CommandOrControl+R', () => {
-    mainWindow.webContents.send('reset-timer');
-  });
+    mainWindow.webContents.send('reset-timer')
+  })
 }
 
 function unregisterShortcuts() {
-  globalShortcut.unregister('CommandOrControl+S');
-  globalShortcut.unregister('CommandOrControl+R');
+  globalShortcut.unregister('CommandOrControl+S')
+  globalShortcut.unregister('CommandOrControl+R')
 }
 
 function createWindow() {
   mainWindow = new BrowserWindow({
     ...settings,
     icon: nativeImage.createFromPath('app/assets/app_icon.png')
-  });
+  })
 
-  mainWindow.loadURL(`file://${__dirname}/app.html`);
+  mainWindow.loadURL(`file://${__dirname}/app.html`)
 
   mainWindow.on('ready-to-show', () => {
     if (!mainWindow) {
-      throw new Error('"mainWindow" is not defined');
+      throw new Error('"mainWindow" is not defined')
     }
-    mainWindow.show();
-    mainWindow.focus();
-  });
+    mainWindow.show()
+    mainWindow.focus()
+  })
 
   mainWindow.on('focus', () => {
-    registerShortcuts();
-  });
+    registerShortcuts()
+  })
 
   mainWindow.on('blur', () => {
-    unregisterShortcuts();
-  });
+    unregisterShortcuts()
+  })
 
   mainWindow.on('closed', () => {
-    mainWindow = null;
-  });
+    mainWindow = null
+  })
 }
 
 const menuItems = [
@@ -101,7 +99,7 @@ const menuItems = [
     accelerator: 'Cmd+S',
     selector: 'start:',
     click: () => {
-      mainWindow.webContents.send('toggle-timer');
+      mainWindow.webContents.send('toggle-timer')
     }
   },
   {
@@ -109,30 +107,28 @@ const menuItems = [
     accelerator: 'Cmd+R',
     selector: 'reset:',
     click: () => {
-      mainWindow.webContents.send('reset-timer');
+      mainWindow.webContents.send('reset-timer')
     }
   },
   {
     label: 'Skip break',
     click: () => {
-      mainWindow.webContents.send('skip-break');
+      mainWindow.webContents.send('skip-break')
     }
   },
   { label: 'Exit', role: 'quit' }
 ];
 
 function createTray() {
-  tray = new Tray(
-    nativeImage
-      .createFromPath('app/assets/tray_icon.png')
-      .resize({ width: 16, height: 16 })
-  );
+  tray = new Tray(nativeImage
+    .createFromPath('app/assets/tray_icon.png')
+    .resize({ width: 16, height: 16 }))
 
-  const contextMenu = Menu.buildFromTemplate(menuItems);
+  const contextMenu = Menu.buildFromTemplate(menuItems)
 
-  tray.setToolTip('This is my application.');
-  tray.setContextMenu(contextMenu);
-  tray.setTitle(WORK_TIME_TEXT);
+  tray.setToolTip('This is my application.')
+  tray.setContextMenu(contextMenu)
+  tray.setTitle(WORK_TIME_TEXT)
 }
 
 /**
@@ -140,41 +136,41 @@ function createTray() {
  */
 
 ipcMain.on('update-tray-title', (event, title) => {
-  tray.setTitle(title);
-});
+  tray.setTitle(title)
+})
 
 ipcMain.on('update-workt-status', (event, label, time) => {
-  menuItems[0].label = label;
+  menuItems[0].label = label
 
   const contextMenu = Menu.buildFromTemplate(menuItems);
 
-  tray.setContextMenu(contextMenu);
-  tray.setTitle(time);
-});
+  tray.setContextMenu(contextMenu)
+  tray.setTitle(time)
+})
 
 app.on('window-all-closed', () => {
   // Respect the OSX convention of having the application in memory even
   // after all windows have been closed
   if (process.platform !== 'darwin') {
-    app.quit();
+    app.quit()
   }
-});
+})
 
 app.on('ready', async () => {
   if (
     process.env.NODE_ENV === 'development' ||
     process.env.DEBUG_PROD === 'true'
   ) {
-    await installExtensions();
+    await installExtensions()
   }
 
-  createTray();
-  createWindow();
+  createTray()
+  createWindow()
 
-  const menuBuilder = new MenuBuilder(mainWindow);
-  menuBuilder.buildMenu();
+  const menuBuilder = new MenuBuilder(mainWindow)
+  menuBuilder.buildMenu()
 
-  globalShortcut.register('CommandOrControl+P', () => {
-    mainWindow.focus();
-  });
-});
+  globalShortcut.register('CommandOrControl+/', () => {
+    mainWindow.focus()
+  })
+})
