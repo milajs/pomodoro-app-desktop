@@ -50,13 +50,13 @@ const installExtensions = async () => {
 }
 
 function registerShortcuts() {
-  globalShortcut.register('CommandOrControl+S', () => {
-    mainWindow.webContents.send('toggle-timer')
-  })
+  // globalShortcut.register('CommandOrControl+S', () => {
+  //   if (mainWindow) { mainWindow.webContents.send('toggle-timer') }
+  // })
 
-  globalShortcut.register('CommandOrControl+R', () => {
-    mainWindow.webContents.send('reset-timer')
-  })
+  // globalShortcut.register('CommandOrControl+R', () => {
+  //   if (mainWindow) { mainWindow.webContents.send('reset-timer') }
+  // })
 }
 
 function unregisterShortcuts() {
@@ -99,7 +99,7 @@ const menuItems = [
     accelerator: 'Cmd+S',
     selector: 'start:',
     click: () => {
-      mainWindow.webContents.send('toggle-timer')
+      if (mainWindow) { mainWindow.webContents.send('toggle-timer') }
     }
   },
   {
@@ -107,13 +107,13 @@ const menuItems = [
     accelerator: 'Cmd+R',
     selector: 'reset:',
     click: () => {
-      mainWindow.webContents.send('reset-timer')
+      if (mainWindow) { mainWindow.webContents.send('reset-timer') }
     }
   },
   {
     label: 'Skip break',
     click: () => {
-      mainWindow.webContents.send('skip-break')
+      if (mainWindow) { mainWindow.webContents.send('skip-break') }
     }
   },
   { label: 'Exit', role: 'quit' }
@@ -136,16 +136,17 @@ function createTray() {
  */
 
 ipcMain.on('update-tray-title', (event, title) => {
-  tray.setTitle(title)
+  if (tray) { tray.setTitle(title) }
 })
 
 ipcMain.on('update-workt-status', (event, label, time) => {
   menuItems[0].label = label
 
   const contextMenu = Menu.buildFromTemplate(menuItems)
-
-  tray.setContextMenu(contextMenu)
-  tray.setTitle(time)
+  if (tray) {
+    tray.setContextMenu(contextMenu)
+    tray.setTitle(time)
+  }
 })
 
 app.on('window-all-closed', () => {
@@ -171,6 +172,6 @@ app.on('ready', async () => {
   menuBuilder.buildMenu()
 
   globalShortcut.register('CommandOrControl+/', () => {
-    mainWindow.focus()
+    if (mainWindow) { mainWindow.focus() }
   })
 })
