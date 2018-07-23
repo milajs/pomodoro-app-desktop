@@ -67,7 +67,7 @@ function unregisterShortcuts() {
 function createWindow() {
   mainWindow = new BrowserWindow({
     ...settings,
-    icon: nativeImage.createFromPath('app/assets/app_icon.png')
+    icon: nativeImage.createFromPath('app/assets/appicon.png')
   })
 
   mainWindow.loadURL(`file://${__dirname}/app.html`)
@@ -121,7 +121,7 @@ const menuItems = [
 
 function createTray() {
   tray = new Tray(nativeImage
-    .createFromPath('app/assets/tray_icon.png')
+    .createFromPath('app/assets/trayicon.png')
     .resize({ width: 16, height: 16 }))
 
   const contextMenu = Menu.buildFromTemplate(menuItems)

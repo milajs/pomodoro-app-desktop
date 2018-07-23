@@ -38,6 +38,7 @@
     "productName": "PomodoroApp",
     "appId": "org.develar.PomodoroApp",
     "files": [
+      "assets/",
       "dist/",
       "node_modules/",
       "app.html",
