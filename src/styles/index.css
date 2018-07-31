@@ -1,0 +1,47 @@
+@import './timer.css';
+@import  './stats.css';
+
+body {
+  margin: 0;
+  padding: 0;
+  position: relative;
+  color: white;
+  height: 100vh;
+  font-family: Arial, Helvetica, Helvetica Neue, serif;
+  -webkit-user-select: none;
+  -webkit-app-region: drag;
+}
+
+button {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  -webkit-app-region: no-drag;
+}
+
+.container {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  min-width: 350px;
+  min-height: 690px;
+  align-items: center;
+  justify-content: center;
+  transition: 0.3s;
+}
+
+.background-work {
+  background: #ef5350;
+}
+
+.background-relax {
+  background: #00bfa5;
+}
+
+.timer-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  color: white;
+}
