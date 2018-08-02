@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react'
-// import { ipcRenderer } from 'electron'
 
 import Timer from './Timer'
 import Stats from './Stats'
@@ -7,6 +6,8 @@ import Stats from './Stats'
 import { formatTimeToString, getNewSeries } from './utils'
 
 import { WORK_TIME, RELAX_TIME, WORK_TIME_TEXT } from '../../constants'
+
+const { ipcRenderer } = window.require("electron")
 
 const startSound = require('../../assets/pomodoro-start.mp3')
 const endSound = require('../../assets/pomodoro-end.mp3')
@@ -89,7 +90,7 @@ export default class MainContainer extends PureComponent {
         stage: 'work'
       }, () => {
         clearInterval(this.timer)
-        // ipcRenderer.send('update-tray-title', WORK_TIME_TEXT)
+        ipcRenderer.send('update-tray-title', WORK_TIME_TEXT)
       }
     )
   }
@@ -116,7 +117,7 @@ export default class MainContainer extends PureComponent {
     } else {
       const newTime = this.state.time - 1
       this.setState({ time: newTime }, () => {
-        // ipcRenderer.send('update-tray-title', formatTimeToString(newTime))
+        ipcRenderer.send('update-tray-title', formatTimeToString(newTime))
       })
     }
   }
@@ -124,7 +125,7 @@ export default class MainContainer extends PureComponent {
   resetTimer = () => {
     this.setState(initialState, () => {
       clearInterval(this.timer)
-      // ipcRenderer.send('update-tray-title', WORK_TIME_TEXT)
+      ipcRenderer.send('update-tray-title', WORK_TIME_TEXT)
     })
   }
 }
