@@ -5,12 +5,14 @@ import Stats from './Stats'
 
 import { formatTimeToString, getNewSeries } from './utils'
 
-import { WORK_TIME, RELAX_TIME, WORK_TIME_TEXT } from '../../constants'
+import { WORK_TIME, RELAX_TIME } from '../../constants'
 
 const { ipcRenderer } = window.require("electron")
 
 const startSound = require('../../assets/pomodoro-start.mp3')
 const endSound = require('../../assets/pomodoro-end.mp3')
+
+const INITIAL_TIME = formatTimeToString(WORK_TIME)
 
 const initialState = {
   series: 0,
@@ -27,19 +29,19 @@ export default class MainContainer extends PureComponent {
     this.state = initialState
   }
 
-  // componentDidMount() {
-  //   ipcRenderer.on('toggle-timer', () => {
-  //     this.toggleTimer()
-  //   })
+  componentDidMount() {
+    ipcRenderer.on('toggle-timer', () => {
+      this.toggleTimer()
+    })
 
-  //   ipcRenderer.on('reset-timer', () => {
-  //     this.resetTimer()
-  //   })
+    ipcRenderer.on('reset-timer', () => {
+      this.resetTimer()
+    })
 
-  //   ipcRenderer.on('skip-break', () => {
-  //     this.skipBreak()
-  //   })
-  // }
+    ipcRenderer.on('skip-break', () => {
+      this.skipBreak()
+    })
+  }
 
   render() {
     const { stage } = this.state
@@ -65,11 +67,11 @@ export default class MainContainer extends PureComponent {
   }
 
   toggleTimer = () => {
-    // const time = formatTimeToString(this.state.time)
+    const time = formatTimeToString(this.state.time)
 
     this.setState({ active: !this.state.active }, () => {
       if (this.state.active) {
-        // ipcRenderer.send('update-workt-status', 'Stop', time)
+        ipcRenderer.send('update-workt-status', 'Stop', time)
 
         if (this.state.time === WORK_TIME) {
           document.getElementById('audio-start').play()
@@ -77,22 +79,10 @@ export default class MainContainer extends PureComponent {
 
         this.timer = setInterval(this.tick, 1000)
       } else {
-        // ipcRenderer.send('update-workt-status', 'Start', time)
+        ipcRenderer.send('update-workt-status', 'Start', time)
         clearInterval(this.timer)
       }
     })
-  }
-
-  skipBreak = () => {
-    this.setState({
-        active: false,
-        time: WORK_TIME,
-        stage: 'work'
-      }, () => {
-        clearInterval(this.timer)
-        ipcRenderer.send('update-tray-title', WORK_TIME_TEXT)
-      }
-    )
   }
 
   tick = () => {
@@ -122,10 +112,22 @@ export default class MainContainer extends PureComponent {
     }
   }
 
+  skipBreak = () => {
+    this.setState({
+        active: false,
+        time: WORK_TIME,
+        stage: 'work'
+      }, () => {
+        clearInterval(this.timer)
+        ipcRenderer.send('update-tray-title', INITIAL_TIME)
+      }
+    )
+  }
+
   resetTimer = () => {
     this.setState(initialState, () => {
       clearInterval(this.timer)
-      ipcRenderer.send('update-tray-title', WORK_TIME_TEXT)
+      ipcRenderer.send('update-tray-title', INITIAL_TIME)
     })
   }
 }

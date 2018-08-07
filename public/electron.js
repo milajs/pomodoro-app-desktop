@@ -64,6 +64,16 @@ ipcMain.on('update-tray-title', (event, title) => {
   if (tray) { tray.setTitle(title) }
 })
 
+ipcMain.on('update-workt-status', (event, label, time) => {
+  menuItems[0].label = label
+
+  const contextMenu = Menu.buildFromTemplate(menuItems)
+  if (tray) {
+    tray.setContextMenu(contextMenu)
+    tray.setTitle(time)
+  }
+})
+
 app.on('ready', () => {
   createTray()
   createWindow()
