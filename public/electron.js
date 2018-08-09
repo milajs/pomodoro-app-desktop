@@ -1,13 +1,33 @@
 const electron = require('electron')
 const settings = require('./settings')
 
-const { app, BrowserWindow, ipcMain, Menu, nativeImage, Tray } = electron
+const { app, BrowserWindow, ipcMain, globalShortcut, Menu, nativeImage, Tray } = electron
 
 const path = require('path')
 const isDev = require('electron-is-dev')
 
 let mainWindow
 let tray
+
+function registerShortcuts() {
+  globalShortcut.register('CommandOrControl+S', () => {
+    if (mainWindow) { mainWindow.webContents.send('toggle-timer') }
+  })
+
+  globalShortcut.register('CommandOrControl+R', () => {
+    if (mainWindow) { mainWindow.webContents.send('reset-timer') }
+  })
+
+  globalShortcut.register('CommandOrControl+B', () => {
+    if (mainWindow) { mainWindow.webContents.send('skip-break') }
+  })
+}
+
+function unregisterShortcuts() {
+  globalShortcut.unregister('CommandOrControl+S')
+  globalShortcut.unregister('CommandOrControl+R')
+  globalShortcut.unregister('CommandOrControl+B')
+}
 
 function createWindow() {
   mainWindow = new BrowserWindow(settings)
@@ -17,6 +37,18 @@ function createWindow() {
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
     mainWindow.focus()
+
+    globalShortcut.register('CommandOrControl+T', () => {
+      if (mainWindow) { mainWindow.focus() }
+    })
+  })
+
+  mainWindow.on('focus', () => {
+    registerShortcuts()
+  })
+
+  mainWindow.on('blur', () => {
+    unregisterShortcuts()
   })
 
   mainWindow.on('closed', () => mainWindow = null)
@@ -41,6 +73,7 @@ const menuItems = [
   },
   {
     label: 'Skip break',
+    accelerator: 'Cmd+B',
     click: () => {
       if (mainWindow) { mainWindow.webContents.send('skip-break') }
     }
