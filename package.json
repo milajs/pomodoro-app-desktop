@@ -1,20 +1,34 @@
 {
-  "name": "pomodoro-app-desktop-2.0",
+  "name": "pomodoro-app-desktop",
   "version": "0.1.0",
+  "author": "LyudmilaPro",
   "private": true,
   "main": "public/electron.js",
-  "dependencies": {
-    "electron-is-dev": "^0.3.0",
-    "react": "^16.4.1",
-    "react-dom": "^16.4.1",
-    "react-scripts": "1.1.4"
-  },
+  "homepage": "./",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "electron-dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\""
+    "electron-dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
+    "electron-pack": "build --config.extraMetadata.main=build/electron.js",
+    "preelectron-pack": "yarn build"
+  },
+  "build": {
+    "appId": "com.example.electron-cra",
+    "files": [
+      "build/**/*",
+      "node_modules/**/*"
+    ],
+    "directories":{
+      "buildResources": "assets"
+    }
+  },
+  "dependencies": {
+    "electron-is-dev": "^0.3.0",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "react-scripts": "1.1.4"
   },
   "devDependencies": {
     "babel-eslint": "^7.2.3",

@@ -30,7 +30,10 @@ function unregisterShortcuts() {
 }
 
 function createWindow() {
-  mainWindow = new BrowserWindow(settings)
+  mainWindow = new BrowserWindow({
+    ...settings,
+    icon: nativeImage.createFromPath('src/assets/appicon.png')
+  })
 
   mainWindow.loadURL(isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../build/index.html')}`)
 

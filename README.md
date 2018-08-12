@@ -10,3 +10,9 @@ cd pomodoro-app-desktop
 yarn
 yarn electron-dev
 ```
+
+## Production build
+
+```
+yarn electron-pack
+```
