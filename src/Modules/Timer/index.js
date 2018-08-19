@@ -99,7 +99,9 @@ export default class MainContainer extends PureComponent {
       const time = isPomodoroEnd ? RELAX_TIME : WORK_TIME
       const series = getNewSeries(this.state.stage, this.state.series)
 
-      this.setState({ stage, total, time, active, series })
+      this.setState({ stage, total, time, active, series }, () => {
+        ipcRenderer.send('update-tray-title', formatTimeToString(time))
+      })
 
       if (!active) {
         clearInterval(this.timer)
