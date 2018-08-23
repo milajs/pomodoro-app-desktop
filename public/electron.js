@@ -32,7 +32,7 @@ function unregisterShortcuts() {
 function createWindow() {
   mainWindow = new BrowserWindow({
     ...settings,
-    icon: nativeImage.createFromPath('public/appicon.png')
+    icon: nativeImage.createFromPath(path.join(__dirname, '/appicon.png'))
   })
 
   mainWindow.loadURL(isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../build/index.html')}`)
@@ -86,7 +86,7 @@ const menuItems = [
 
 function createTray() {
   tray = new Tray(nativeImage
-    .createFromPath('public/trayicon.png')
+    .createFromPath(path.join(__dirname, '/trayicon.png'))
     .resize({ width: 16, height: 16 }))
 
   const contextMenu = Menu.buildFromTemplate(menuItems)
