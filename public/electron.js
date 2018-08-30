@@ -81,7 +81,11 @@ const menuItems = [
       if (mainWindow) { mainWindow.webContents.send('skip-break') }
     }
   },
-  { label: 'Exit', role: 'quit' }
+  {
+    label: 'Quit',
+    role: 'quit',
+    accelerator: 'Cmd+Q'
+  }
 ]
 
 function createTray() {
