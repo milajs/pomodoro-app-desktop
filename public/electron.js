@@ -54,7 +54,16 @@ function createWindow() {
     unregisterShortcuts()
   })
 
-  mainWindow.on('closed', () => mainWindow = null)
+  mainWindow.on('close', (event) => {
+    if (mainWindow.isVisible() && !app.isQuiting) {
+      event.preventDefault()
+      mainWindow.hide()
+    }
+  })
+
+  mainWindow.on('closed', () => {
+    mainWindow = null
+  })
 }
 
 const menuItems = [
@@ -63,7 +72,9 @@ const menuItems = [
     accelerator: 'Cmd+S',
     selector: 'start:',
     click: () => {
-      if (mainWindow) { mainWindow.webContents.send('toggle-timer') }
+      if (mainWindow) { 
+        mainWindow.webContents.send('toggle-timer') 
+      }
     }
   },
   {
@@ -71,20 +82,29 @@ const menuItems = [
     accelerator: 'Cmd+R',
     selector: 'reset:',
     click: () => {
-      if (mainWindow) { mainWindow.webContents.send('reset-timer') }
+      if (mainWindow) {
+        mainWindow.webContents.send('reset-timer')
+      }
     }
   },
   {
     label: 'Skip break',
     accelerator: 'Cmd+B',
     click: () => {
-      if (mainWindow) { mainWindow.webContents.send('skip-break') }
+      if (mainWindow) {
+        mainWindow.webContents.send('skip-break')
+      }
     }
   },
   {
     label: 'Quit',
-    role: 'quit',
-    accelerator: 'Cmd+Q'
+    accelerator: 'Cmd+Q',
+    click: () => {
+      if (mainWindow) {
+        app.isQuiting = true
+        app.quit()
+      }
+    }
   }
 ]
 
@@ -119,14 +139,14 @@ app.on('ready', () => {
   createWindow()
 })
 
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    app.quit()
-  }
-})
-
 app.on('activate', () => {
   if (mainWindow === null) {
     createWindow()
+  }
+})
+
+app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin') {
+    app.quit()
   }
 })
