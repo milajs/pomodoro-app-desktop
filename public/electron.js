@@ -66,35 +66,32 @@ function createWindow() {
   })
 }
 
+function trayAction(action) {
+  if (mainWindow) { 
+    if (!mainWindow.isVisible()) {
+      mainWindow.show()
+    }
+    mainWindow.webContents.send(action) 
+  }
+}
+
 const menuItems = [
   {
     label: 'Start',
     accelerator: 'Cmd+S',
     selector: 'start:',
-    click: () => {
-      if (mainWindow) { 
-        mainWindow.webContents.send('toggle-timer') 
-      }
-    }
+    click: () => trayAction('toggle-timer')
   },
   {
     label: 'Reset',
     accelerator: 'Cmd+R',
     selector: 'reset:',
-    click: () => {
-      if (mainWindow) {
-        mainWindow.webContents.send('reset-timer')
-      }
-    }
+    click: () => trayAction('reset-timer')
   },
   {
     label: 'Skip break',
     accelerator: 'Cmd+B',
-    click: () => {
-      if (mainWindow) {
-        mainWindow.webContents.send('skip-break')
-      }
-    }
+    click: () => trayAction('skip-break')
   },
   {
     label: 'Quit',
