@@ -1,10 +1,9 @@
 const electron = require('electron')
 const settings = require('./settings')
-
-const { app, BrowserWindow, ipcMain, globalShortcut, Menu, nativeImage, Tray } = electron
-
 const path = require('path')
 const isDev = require('electron-is-dev')
+
+const { app, BrowserWindow, ipcMain, globalShortcut, Menu, nativeImage, Tray } = electron
 
 let mainWindow
 let tray
@@ -79,19 +78,24 @@ const menuItems = [
   {
     label: 'Start',
     accelerator: 'Cmd+S',
-    selector: 'start:',
+    selector: 'start',
     click: () => trayAction('toggle-timer')
   },
   {
     label: 'Reset',
     accelerator: 'Cmd+R',
-    selector: 'reset:',
+    selector: 'reset',
     click: () => trayAction('reset-timer')
   },
   {
     label: 'Skip break',
     accelerator: 'Cmd+B',
+    selector: 'skip',
+    enabled: false,
     click: () => trayAction('skip-break')
+  },
+  {
+    type: 'separator'
   },
   {
     label: 'Quit',
@@ -118,17 +122,36 @@ function createTray() {
 }
 
 ipcMain.on('update-tray-title', (event, title) => {
-  if (tray) { tray.setTitle(title) }
+  if (tray) {
+    tray.setTitle(title)
+  }
 })
 
-ipcMain.on('update-workt-status', (event, label, time) => {
-  menuItems[0].label = label
-
-  const contextMenu = Menu.buildFromTemplate(menuItems)
+function updateTray(contextMenu, time) {
   if (tray) {
     tray.setContextMenu(contextMenu)
     tray.setTitle(time)
   }
+}
+
+ipcMain.on('update-workt-status', (event, label, time) => {
+  const toggleButtonIndex = menuItems.findIndex(item => item.selector === 'start')
+
+  menuItems[toggleButtonIndex].label = label
+
+  const contextMenu = Menu.buildFromTemplate(menuItems)
+
+  updateTray(contextMenu, time)
+})
+
+ipcMain.on('update-stage', (event, stage, time) => {
+  const skipButtonIndex = menuItems.findIndex(item => item.selector === 'skip')
+
+  menuItems[skipButtonIndex].enabled = stage === 'relax'
+
+  const contextMenu = Menu.buildFromTemplate(menuItems)
+
+  updateTray(contextMenu, time)
 })
 
 app.on('ready', () => {

@@ -100,7 +100,7 @@ export default class MainContainer extends PureComponent {
       const series = getNewSeries(this.state.stage, this.state.series)
 
       this.setState({ stage, total, time, active, series }, () => {
-        ipcRenderer.send('update-tray-title', formatTimeToString(time))
+        ipcRenderer.send('update-stage', stage, formatTimeToString(time))
       })
 
       if (!active) {
