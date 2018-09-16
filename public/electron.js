@@ -60,39 +60,61 @@ function createWindow() {
     }
   })
 
+  mainWindow.on('show', () => {
+    toggleOpenButton(false)
+  })
+
+  mainWindow.on('hide', () => {
+    toggleOpenButton(true)
+  })
+
   mainWindow.on('closed', () => {
     mainWindow = null
   })
 }
 
-function trayAction(action) {
-  if (mainWindow) { 
-    if (!mainWindow.isVisible()) {
-      mainWindow.show()
-    }
-    mainWindow.webContents.send(action) 
-  }
+function toggleOpenButton(enabled) {
+  const openButtonIndex = menuItems.findIndex(item => item.selector === 'open')
+
+    menuItems[openButtonIndex].enabled = enabled
+
+    const contextMenu = Menu.buildFromTemplate(menuItems)
+
+    tray.setContextMenu(contextMenu)
 }
 
 const menuItems = [
   {
+    label: 'Open',
+    accelerator: 'Cmd+O',
+    selector: 'open',
+    enabled: false,
+    click: () => {
+      if (mainWindow) { 
+        if (!mainWindow.isVisible()) {
+          mainWindow.show()
+        }
+      }
+    }
+  },
+  {
     label: 'Start',
     accelerator: 'Cmd+S',
     selector: 'start',
-    click: () => trayAction('toggle-timer')
+    click: () => { mainWindow.webContents.send('toggle-timer') }
   },
   {
     label: 'Reset',
     accelerator: 'Cmd+R',
     selector: 'reset',
-    click: () => trayAction('reset-timer')
+    click: () => { mainWindow.webContents.send('reset-timer') }
   },
   {
     label: 'Skip break',
     accelerator: 'Cmd+B',
     selector: 'skip',
     enabled: false,
-    click: () => trayAction('skip-break')
+    click: () => { mainWindow.webContents.send('skip-break') }
   },
   {
     type: 'separator'
