@@ -44,16 +44,24 @@
   margin-left: 2px;
 }
 
-.skipBtn {
-  animation: slideIn 0.3s
+.slideIn-enter {
+  opacity: 0;
+  margin-right: -45%;
 }
 
-@keyframes slideIn {
-  from {
-    margin-right: -50%;
-  }
+.slideIn-enter.slideIn-enter-active {
+  opacity: 1;
+  margin-right: 0;
+  transition: 0.3s;
+}
 
-  to {
-    margin-left: 10px;
-  }
+.slideIn-exit {
+  opacity: 1;
+  margin-right: 0;
+}
+
+.slideIn-exit.slideIn-exit-active {
+  opacity: 0;
+  margin-right: -45%;
+  transition: 0.3s;
 }

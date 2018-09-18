@@ -1,4 +1,5 @@
 import React from 'react'
+import { CSSTransition } from 'react-transition-group'
 
 import { formatTimeToString } from './utils'
 
@@ -67,11 +68,16 @@ export default function Timer({ active, time, stage, toggleTimer, skipBreak }) {
         <img src={src} alt="play" className={active ? '' : "playOffset"} />
       </button>
 
-      {stage === 'relax' && (
-        <button className="startButton skipBtn" onClick={skipBreak}>
+      <CSSTransition
+        timeout={300}
+        unmountOnExit
+        classNames="slideIn"
+        in={stage === 'relax'}
+      >
+        <button className="startButton" onClick={skipBreak}>
           Skip break
         </button>
-      )}
+      </CSSTransition>
     </div>
   ]
 }
