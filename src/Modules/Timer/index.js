@@ -104,6 +104,7 @@ export default class MainContainer extends PureComponent {
       })
 
       if (!active) {
+        ipcRenderer.send('update-workt-status', 'Start', INITIAL_TIME)
         clearInterval(this.timer)
       }
     } else {
@@ -121,7 +122,7 @@ export default class MainContainer extends PureComponent {
         stage: 'work'
       }, () => {
         clearInterval(this.timer)
-        ipcRenderer.send('update-tray-title', INITIAL_TIME)
+        ipcRenderer.send('update-workt-status', 'Start', INITIAL_TIME)
       }
     )
   }
