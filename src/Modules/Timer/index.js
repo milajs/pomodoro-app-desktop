@@ -73,9 +73,9 @@ export default class MainContainer extends PureComponent {
       if (this.state.active) {
         ipcRenderer.send('update-workt-status', 'Stop', time)
 
-        if (this.state.time === WORK_TIME) {
-          document.getElementById('audio-start').play()
-        }
+        // if (this.state.time === WORK_TIME) {
+        //   document.getElementById('audio-start').play()
+        // }
 
         this.timer = setInterval(this.tick, 1000)
       } else {
