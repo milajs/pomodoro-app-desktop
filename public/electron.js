@@ -143,18 +143,18 @@ function createTray() {
   tray.setTitle('25:00')
 }
 
-ipcMain.on('update-tray-title', (event, title) => {
-  if (tray) {
-    tray.setTitle(title)
-  }
-})
-
 function updateTray(contextMenu, time) {
   if (tray) {
     tray.setContextMenu(contextMenu)
     tray.setTitle(time)
   }
 }
+
+ipcMain.on('update-tray-title', (event, title) => {
+  if (tray) {
+    tray.setTitle(title)
+  }
+})
 
 ipcMain.on('update-workt-status', (event, label, time) => {
   const toggleButtonIndex = menuItems.findIndex(item => item.selector === 'start')
@@ -170,6 +170,18 @@ ipcMain.on('update-stage', (event, stage, time) => {
   const skipButtonIndex = menuItems.findIndex(item => item.selector === 'skip')
 
   menuItems[skipButtonIndex].enabled = stage === 'relax'
+
+  const contextMenu = Menu.buildFromTemplate(menuItems)
+
+  updateTray(contextMenu, time)
+})
+
+ipcMain.on('reset-tray-action', (event, time) => {
+  const skipButtonIndex = menuItems.findIndex(item => item.selector === 'skip')
+  const toggleButtonIndex = menuItems.findIndex(item => item.selector === 'start')
+
+  menuItems[skipButtonIndex].enabled = false
+  menuItems[toggleButtonIndex].label = 'Start'
 
   const contextMenu = Menu.buildFromTemplate(menuItems)
 
