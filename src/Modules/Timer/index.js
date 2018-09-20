@@ -132,6 +132,8 @@ export default class MainContainer extends PureComponent {
     this.setState(initialState, () => {
       clearInterval(this.timer)
       ipcRenderer.send('update-tray-title', INITIAL_TIME)
+      ipcRenderer.send('update-workt-status', 'Start', INITIAL_TIME)
+      ipcRenderer.send('update-stage', 'work', INITIAL_TIME)
     })
   }
 }
