@@ -33,14 +33,21 @@
 }
 
 .settingsButton {
+  width: 40px;
+  height: 40px;
   padding: 5px;
   background: transparent;
   position: absolute;
   top: 10px;
   right: 15px;
+  transition: 0.5s ease-in-out;
+}
+
+.settingsButton:hover {
+  transform: rotate(120deg);
 }
 
 .settingsButton img {
-  width: 25px;
-  height: 25px;
+  width: 30px;
+  height: 30px;
 }
