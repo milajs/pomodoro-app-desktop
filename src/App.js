@@ -1,14 +1,18 @@
 import React, { Component } from 'react'
 
-import './styles/index.css'
-
 import Timer from './Modules/Timer'
+
+const gearIcon = require('./assets/gear.png')
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
+      <div className="app">
         <Timer />
+
+        <button className="settingsButton">
+          <img src={gearIcon} alt="gear" />
+        </button>
       </div>
     )
   }

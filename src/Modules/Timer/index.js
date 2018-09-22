@@ -94,16 +94,15 @@ export default class MainContainer extends PureComponent {
       }
 
       const stage = isPomodoroEnd ? 'relax' : 'work'
-      const active = isPomodoroEnd
       const total = isPomodoroEnd ? this.state.total + 1 : this.state.total
       const time = isPomodoroEnd ? RELAX_TIME : WORK_TIME
       const series = getNewSeries(this.state.stage, this.state.series)
 
-      this.setState({ stage, total, time, active, series }, () => {
+      this.setState({ stage, total, time, active: isPomodoroEnd, series }, () => {
         ipcRenderer.send('update-stage', stage, formatTimeToString(time))
       })
 
-      if (!active) {
+      if (!isPomodoroEnd) {
         ipcRenderer.send('update-workt-status', 'Start', INITIAL_TIME)
         clearInterval(this.timer)
       }

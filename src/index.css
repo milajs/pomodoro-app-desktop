@@ -1,5 +1,19 @@
+@import  './styles/index.css';
+
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
+  position: relative;
+  color: white;
+  height: 100vh;
+  font-family: Arial, Helvetica, Helvetica Neue, serif;
+  -webkit-user-select: none;
+  -webkit-app-region: drag;
+}
+
+button {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  -webkit-app-region: no-drag;
 }

@@ -1,22 +1,8 @@
 @import './timer.css';
 @import  './stats.css';
 
-body {
-  margin: 0;
-  padding: 0;
+.app {
   position: relative;
-  color: white;
-  height: 100vh;
-  font-family: Arial, Helvetica, Helvetica Neue, serif;
-  -webkit-user-select: none;
-  -webkit-app-region: drag;
-}
-
-button {
-  border: none;
-  outline: none;
-  cursor: pointer;
-  -webkit-app-region: no-drag;
 }
 
 .container {
@@ -44,4 +30,17 @@ button {
   align-items: center;
   position: relative;
   color: white;
+}
+
+.settingsButton {
+  padding: 5px;
+  background: transparent;
+  position: absolute;
+  top: 10px;
+  right: 15px;
+}
+
+.settingsButton img {
+  width: 25px;
+  height: 25px;
 }
