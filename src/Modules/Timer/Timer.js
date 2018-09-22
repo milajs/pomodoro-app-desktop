@@ -20,8 +20,6 @@ export default function Timer({ active, time, stage, toggleTimer, skipBreak }) {
   const fullTime = stage === 'work' ? WORK_TIME : RELAX_TIME
   const progress = time / fullTime
 
-  const strokeColor = stage === 'work' ? '#EF5350' : '#00BFA5'
-
   return [
     <svg
       height={VIEW_SIDE}
@@ -36,7 +34,7 @@ export default function Timer({ active, time, stage, toggleTimer, skipBreak }) {
         fill="none"
         strokeWidth={15}
         strokeDasharray={[5, 5]}
-        stroke="rgba(255, 255, 255, 0.75)"
+        stroke="#E53935"
       />
       <circle
         r={RADIUS}
@@ -44,7 +42,7 @@ export default function Timer({ active, time, stage, toggleTimer, skipBreak }) {
         cy={CENTER}
         fill="none"
         strokeWidth={15}
-        stroke={strokeColor}
+        stroke="#fafafa"
         strokeDasharray={CIRCLE_LENGHT}
         strokeDashoffset={-CIRCLE_LENGHT * (1 - progress)}
       />
@@ -55,7 +53,7 @@ export default function Timer({ active, time, stage, toggleTimer, skipBreak }) {
         fill="none"
         strokeWidth={15}
         strokeDasharray={[5, 5]}
-        stroke="rgba(255, 255, 255, 0.3)"
+        stroke="rgba(255, 0, 0, 0.3)"
       />
     </svg>,
 

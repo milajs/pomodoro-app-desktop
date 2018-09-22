@@ -8,7 +8,7 @@
   width: 205px;
   height: 205px;
   border-radius: 100px;
-  background: rgba(255, 255, 255, 0.15);
+  background: var(--red);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -27,7 +27,7 @@
   width: 90px;
   min-height: 55px;
   margin: 0 10px;
-  background: rgba(255, 255, 255, 0.15);
+  background: var(--red);
   padding: 0 10px;
   border-radius: 10px;
   font-size: 16px;
@@ -52,7 +52,7 @@
 .slideIn-enter.slideIn-enter-active {
   opacity: 1;
   margin-right: 0;
-  transition: 0.3s;
+  transition: 0.3s ease-in-out;
 }
 
 .slideIn-exit {
@@ -63,5 +63,5 @@
 .slideIn-exit.slideIn-exit-active {
   opacity: 0;
   margin-right: -45%;
-  transition: 0.3s;
+  transition: 0.3s ease-in-out;
 }

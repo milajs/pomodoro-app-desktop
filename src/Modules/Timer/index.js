@@ -44,10 +44,8 @@ export default class MainContainer extends PureComponent {
   }
 
   render() {
-    const { stage } = this.state
-
     return (
-      <div className={`container background-${stage}`}>
+      <div className="container">
         <div className="timer-container">
           <Timer
             time={this.state.time}
