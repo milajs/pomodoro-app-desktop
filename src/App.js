@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 
 import Timer from './Modules/Timer'
-
-const gearIcon = require('./assets/gear.png')
+import GearIcon from './icons/gear'
 
 class App extends Component {
   render() {
@@ -11,7 +10,7 @@ class App extends Component {
         <Timer />
 
         <button className="settingsButton">
-          <img src={gearIcon} alt="gear" />
+          <GearIcon />
         </button>
       </div>
     )

@@ -40,7 +40,6 @@
   transform: rotate(120deg);
 }
 
-.settingsButton img {
-  width: 28px;
-  height: 28px;
+.fillRed {
+  fill: var(--red);
 }
