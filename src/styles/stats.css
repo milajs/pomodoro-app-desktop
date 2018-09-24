@@ -1,5 +1,5 @@
 .seriesTitle {
-  color: var(--red);
+  color: var(--main-color);
   font-size: 24px;
   margin-bottom: 20px;
   margin-top: 50px;
@@ -20,7 +20,7 @@
   width: 38px;
   height: 38px;
   border-radius: 19px;
-  background: var(--light-red);
+  background: var(--light-main-color);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -29,13 +29,13 @@
 .totalRow {
   width: 300px;
   height: 8px;
-  background: var(--light-red);
+  background: var(--light-main-color);
   border-radius: 3px;
 }
 
 .total {
   width: 300px;
   height: 8px;
-  background: var(--red);
+  background: var(--light-main-color);
   border-radius: 3px;
 }

@@ -5,7 +5,7 @@ export default class Gear extends Component {
     return (
       <svg width="28px" height="28px" viewBox="0 0 28 28" version="1.1">
         <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
-            <g id="settings" fill="#000000" fillRule="nonzero" className="fillRed">
+            <g id="settings" fill="#000000" fillRule="nonzero" className="fillIcon">
                 <path d="M26.5503132,11.0539207 L24.5862213,10.7207265 C24.3816284,10.0601837 24.1185804,9.42302296 
                 23.7970772,8.81508977 L24.9544885,7.19588309 C25.4455115,6.50611273 25.3695198,5.56498539 
                 24.7674322,4.96874322 L23.0254697,3.22678079 C22.6981211,2.89943215 22.2655532,2.71822129 

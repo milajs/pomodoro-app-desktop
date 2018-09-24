@@ -3,7 +3,7 @@
 
 .app {
   position: relative;
-  background: #fafafa
+  background: var(--background-color);
 }
 
 .container {
@@ -40,6 +40,6 @@
   transform: rotate(120deg);
 }
 
-.fillRed {
-  fill: var(--red);
+.fillIcon {
+  fill: var(--main-color);
 }

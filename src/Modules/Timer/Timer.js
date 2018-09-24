@@ -34,6 +34,7 @@ export default function Timer({ active, time, stage, toggleTimer, skipBreak }) {
         fill="none"
         strokeWidth={15}
         strokeDasharray={[5, 5]}
+        className="strokeMain"
         stroke="#E53935"
       />
       <circle
@@ -42,7 +43,7 @@ export default function Timer({ active, time, stage, toggleTimer, skipBreak }) {
         cy={CENTER}
         fill="none"
         strokeWidth={15}
-        stroke="#fafafa"
+        className="strokeBg"
         strokeDasharray={CIRCLE_LENGHT}
         strokeDashoffset={-CIRCLE_LENGHT * (1 - progress)}
       />
@@ -53,7 +54,7 @@ export default function Timer({ active, time, stage, toggleTimer, skipBreak }) {
         fill="none"
         strokeWidth={15}
         strokeDasharray={[5, 5]}
-        stroke="rgba(255, 0, 0, 0.3)"
+        className="strokeLight"
       />
     </svg>,
 

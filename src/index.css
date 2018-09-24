@@ -10,9 +10,9 @@ body {
   -webkit-user-select: none;
   -webkit-app-region: drag;
 
-  --red: #E53935;
-  --light-red: #FFCDD2;
-  --green: #00E676;
+  --main-color: #E53935;
+  --light-main-color: rgba(229,57,53, 0.3);
+  --background-color: #fafafa;
 }
 
 button {
