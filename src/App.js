@@ -14,7 +14,7 @@ class App extends Component {
 
   render() {
     return (
-      <div className="app">
+      <div className={`app ${this.state.stage}Scheme`}>
         <Timer
           stage={this.state.stage}
           toggleStage={this.toggleStage}

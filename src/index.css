@@ -9,10 +9,6 @@ body {
   font-family: Arial, Helvetica, Helvetica Neue, serif;
   -webkit-user-select: none;
   -webkit-app-region: drag;
-
-  --main-color: #E53935;
-  --light-main-color: rgba(229,57,53, 0.3);
-  --background-color: #fafafa;
 }
 
 button {

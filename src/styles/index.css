@@ -1,8 +1,19 @@
 @import './timer.css';
 @import  './stats.css';
 
+.workScheme {
+  --main-color: #E53935;
+  --light-main-color: rgba(229,57,53, 0.3);
+}
+
+.relaxScheme {
+  --main-color: #26A69A;
+  --light-main-color: rgba(38,166,154,0.3);
+}
+
 .app {
   position: relative;
+  --background-color: #fafafa;
   background: var(--background-color);
 }
 
