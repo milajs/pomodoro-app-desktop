@@ -36,6 +36,6 @@
 .total {
   width: 300px;
   height: 8px;
-  background: var(--light-main-color);
+  background: var(--main-color);
   border-radius: 3px;
 }

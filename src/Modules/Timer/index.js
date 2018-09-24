@@ -18,8 +18,7 @@ const initialState = {
   series: 0,
   total: 0,
   active: false,
-  time: WORK_TIME,
-  stage: 'work'
+  time: WORK_TIME
 }
 
 export default class MainContainer extends PureComponent {
@@ -49,7 +48,7 @@ export default class MainContainer extends PureComponent {
         <div className="timer-container">
           <Timer
             time={this.state.time}
-            stage={this.state.stage}
+            stage={this.props.stage}
             active={this.state.active}
             skipBreak={this.skipBreak}
             toggleTimer={this.toggleTimer}
@@ -85,7 +84,7 @@ export default class MainContainer extends PureComponent {
 
   tick = () => {
     if (this.state.time === 0) {
-      const isPomodoroEnd = this.state.stage === 'work'
+      const isPomodoroEnd = this.props.stage === 'work'
 
       if (isPomodoroEnd) {
         document.getElementById('audio-end').play()
@@ -94,9 +93,10 @@ export default class MainContainer extends PureComponent {
       const stage = isPomodoroEnd ? 'relax' : 'work'
       const total = isPomodoroEnd ? this.state.total + 1 : this.state.total
       const time = isPomodoroEnd ? RELAX_TIME : WORK_TIME
-      const series = getNewSeries(this.state.stage, this.state.series)
+      const series = getNewSeries(this.props.stage, this.state.series)
 
-      this.setState({ stage, total, time, active: isPomodoroEnd, series }, () => {
+      this.setState({ total, time, active: isPomodoroEnd, series }, () => {
+        this.props.toggleStage(stage)
         ipcRenderer.send('update-stage', stage, formatTimeToString(time))
       })
 
@@ -113,11 +113,8 @@ export default class MainContainer extends PureComponent {
   }
 
   skipBreak = () => {
-    this.setState({
-        active: false,
-        time: WORK_TIME,
-        stage: 'work'
-      }, () => {
+    this.setState({ active: false, time: WORK_TIME }, () => {
+        this.props.toggleStage('work')
         clearInterval(this.timer)
         ipcRenderer.send('reset-tray-action', INITIAL_TIME)
       }
