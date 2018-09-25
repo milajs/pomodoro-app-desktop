@@ -55,27 +55,3 @@
 .strokeBg {
   stroke: var(--background-color);
 }
-
-/* animation */
-
-.slideIn-enter {
-  opacity: 0;
-  margin-right: -45%;
-}
-
-.slideIn-enter.slideIn-enter-active {
-  opacity: 1;
-  margin-right: 0;
-  transition: 0.3s ease-in-out;
-}
-
-.slideIn-exit {
-  opacity: 1;
-  margin-right: 0;
-}
-
-.slideIn-exit.slideIn-exit-active {
-  opacity: 0;
-  margin-right: -45%;
-  transition: 0.3s ease-in-out;
-}

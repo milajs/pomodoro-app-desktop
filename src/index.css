@@ -6,7 +6,10 @@ body {
   position: relative;
   color: white;
   height: 100vh;
+  box-sizing: border-box;
   font-family: Arial, Helvetica, Helvetica Neue, serif;
+  --background-color: #fafafa;
+  background: var(--background-color);
   -webkit-user-select: none;
   -webkit-app-region: drag;
 }

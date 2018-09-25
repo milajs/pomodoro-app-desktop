@@ -1,5 +1,7 @@
 @import './timer.css';
 @import  './stats.css';
+@import  './settings.css';
+@import  './animation.css';
 
 .workScheme {
   --main-color: #E53935;
@@ -13,8 +15,7 @@
 
 .app {
   position: relative;
-  --background-color: #fafafa;
-  background: var(--background-color);
+  display: flex;
 }
 
 .container {
