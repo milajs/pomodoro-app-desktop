@@ -2,6 +2,13 @@
   transform: rotate(-90deg);
 }
 
+.timerContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
 .timer {
   position: absolute;
   margin-top: 27px;
