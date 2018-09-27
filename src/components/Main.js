@@ -1,16 +1,18 @@
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
+import { CSSTransition } from 'react-transition-group'
 
 import Timer from './Timer'
-import Stats from './Stats'
+import Settings from './Settings'
+import GearIcon from '../icons/gear'
 
-import { formatTimeToString, getNewSeries } from './utils'
+import { formatTimeToString, getNewSeries } from './Timer/utils'
 
-import { WORK_TIME, RELAX_TIME } from '../../constants'
+import { WORK_TIME, RELAX_TIME } from '../constants'
 
 const { ipcRenderer } = window.require("electron")
 
-const startSound = require('../../assets/pomodoro-start.mp3')
-const endSound = require('../../assets/pomodoro-end.mp3')
+const startSound = require('../assets/pomodoro-start.mp3')
+const endSound = require('../assets/pomodoro-end.mp3')
 
 const INITIAL_TIME = formatTimeToString(WORK_TIME)
 
@@ -18,10 +20,11 @@ const initialState = {
   series: 0,
   total: 0,
   active: false,
-  time: WORK_TIME
+  time: WORK_TIME,
+  screen: 'timer'
 }
 
-export default class MainContainer extends PureComponent {
+export default class App extends Component {
   constructor(props) {
     super(props)
 
@@ -43,24 +46,48 @@ export default class MainContainer extends PureComponent {
   }
 
   render() {
-    return (
-      <div className="container">
-        <div className="timer-container">
-          <Timer
-            time={this.state.time}
-            stage={this.props.stage}
-            active={this.state.active}
-            skipBreak={this.skipBreak}
-            toggleTimer={this.toggleTimer}
-          />
+    return [
+      <CSSTransition
+        key="timer"
+        timeout={300}
+        unmountOnExit
+        classNames="translateIn"
+        in={this.state.screen === 'timer'}
+      >
+        <Timer
+          time={this.state.time}
+          stage={this.props.stage}
+          total={this.state.total}
+          series={this.state.series}
+          active={this.state.active}
+          toggleTimer={this.toggleTimer}
+          toggleStage={this.props.toggleStage}
+        />
+      </CSSTransition>,
 
-          <Stats total={this.state.total} series={this.state.series} />
+      <CSSTransition
+        key="settings"
+        timeout={300}
+        unmountOnExit
+        classNames="translateOut"
+        in={this.state.screen === 'settings'}
+      >
+        <Settings />
+      </CSSTransition>,
 
-          <audio id="audio-end" src={endSound} autostart="false" />
-          <audio id="audio-start" src={startSound} autostart="false" />
-        </div>
-      </div>
-    )
+      <button key="settingsButton" className="settingsButton" onClick={this.toggleScreen}>
+        <GearIcon />
+      </button>,
+
+      <audio id="audio-end" src={endSound} autostart="false" />,
+      <audio id="audio-start" src={startSound} autostart="false" />
+    ]
+  }
+
+  toggleScreen = () => {
+    const screen = this.state.screen === 'timer' ? 'settings' : 'timer'
+
+    this.setState({ screen })
   }
 
   toggleTimer = () => {
