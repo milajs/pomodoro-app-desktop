@@ -5,7 +5,7 @@ import Timer from './Timer'
 import Settings from './Settings'
 import GearIcon from '../icons/gear'
 
-import { formatTimeToString, getNewSeries } from './Timer/utils'
+import { formatTimeToString, getNewSeries } from '../utils/timer'
 
 import { WORK_TIME, RELAX_TIME } from '../constants'
 

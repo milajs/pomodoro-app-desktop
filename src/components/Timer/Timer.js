@@ -1,7 +1,7 @@
 import React from 'react'
 import { CSSTransition } from 'react-transition-group'
 
-import { formatTimeToString } from './utils'
+import { formatTimeToString } from '../../utils/timer'
 
 import { WORK_TIME, RELAX_TIME } from '../../constants'
 
