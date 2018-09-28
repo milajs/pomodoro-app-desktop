@@ -16,6 +16,10 @@ const endSound = require('../assets/pomodoro-end.mp3')
 
 const INITIAL_TIME = formatTimeToString(WORK_TIME)
 
+function resetTrayTime() {
+  ipcRenderer.send('reset-tray-action', INITIAL_TIME)
+}
+
 const initialState = {
   series: 0,
   total: 0,
@@ -24,7 +28,7 @@ const initialState = {
   screen: 'timer'
 }
 
-export default class App extends Component {
+export default class MainContainer extends Component {
   constructor(props) {
     super(props)
 
@@ -61,7 +65,6 @@ export default class App extends Component {
           series={this.state.series}
           active={this.state.active}
           toggleTimer={this.toggleTimer}
-          toggleStage={this.props.toggleStage}
         />
       </CSSTransition>,
 
@@ -133,6 +136,7 @@ export default class App extends Component {
       }
     } else {
       const newTime = this.state.time - 1
+
       this.setState({ time: newTime }, () => {
         ipcRenderer.send('update-tray-title', formatTimeToString(newTime))
       })
@@ -142,16 +146,19 @@ export default class App extends Component {
   skipBreak = () => {
     this.setState({ active: false, time: WORK_TIME }, () => {
         this.props.toggleStage('work')
-        clearInterval(this.timer)
-        ipcRenderer.send('reset-tray-action', INITIAL_TIME)
+        this.clearTimer()
       }
     )
   }
 
   resetTimer = () => {
     this.setState(initialState, () => {
-      clearInterval(this.timer)
-      ipcRenderer.send('reset-tray-action', INITIAL_TIME)
+      this.clearTimer()
     })
+  }
+
+  clearTimer = () => {
+    clearInterval(this.timer)
+    resetTrayTime()
   }
 }
