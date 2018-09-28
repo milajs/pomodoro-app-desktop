@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { CSSTransition } from 'react-transition-group'
 
 import Timer from './Timer'
@@ -28,7 +28,7 @@ const initialState = {
   screen: 'timer'
 }
 
-export default class MainContainer extends Component {
+export default class MainContainer extends PureComponent {
   constructor(props) {
     super(props)
 
