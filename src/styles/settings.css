@@ -4,11 +4,21 @@
   height: 100vh;
   min-width: 350px;
   min-height: 690px;
+  color: var(--main-color);
   transition: 0.3s;
 }
 
 .settingsContainer h1 {
-  color: var(--main-color);
   margin-top: 80px;
   margin-left: 35px;
+}
+
+.setingsItem {
+  width: calc(100% - 70);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin: 25px 35px;
+  font-size: 18px;
 }

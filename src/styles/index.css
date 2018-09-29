@@ -2,6 +2,7 @@
 @import  './stats.css';
 @import  './settings.css';
 @import  './animation.css';
+@import './switcher.css';
 
 .workScheme {
   --main-color: #E53935;
