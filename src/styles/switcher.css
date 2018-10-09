@@ -1,13 +1,14 @@
-.swicherContainer {
+.switcherContainer {
   width: 45px;
   height: 29px;
   border-radius: 25px;
   border: 2px solid #B0BEC5;
   background: transparent;
+  transition: 0.3s;
   padding: 0;
 }
 
-.swicherContainer_active {
+.switcherContainer_active {
   border: 2px solid var(--main-color);
   background: var(--main-color);
 }
@@ -18,11 +19,13 @@
   border-radius: 25px;
   border: 2px solid #B0BEC5;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  background: var(--background-color);
+  transition: 0.3s;
   margin-top: -2px;
   margin-left: -2px;
 }
 
 .switcherTumblr_active {
   border: 2px solid var(--main-color);
-  transform: translateX(100%)
+  transform: translateX(55%)
 }
