@@ -5,8 +5,16 @@ export default class Switcher extends PureComponent {
     super(props)
 
     this.state = {
-      active: false
+      active: props.active
     }
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (prevState.active !== nextProps.active) {
+      return { active: nextProps.active }
+    }
+
+    return null
   }
 
   render() {
@@ -20,6 +28,10 @@ export default class Switcher extends PureComponent {
   }
 
   toggleActive = () =>{
-    this.setState({ active: !this.state.active })
+    const active = !this.state.active
+
+    this.setState({ active }, () => {
+      this.props.onPress(active)
+    })
   }
 }

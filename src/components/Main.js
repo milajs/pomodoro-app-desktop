@@ -82,8 +82,8 @@ export default class MainContainer extends PureComponent {
         <GearIcon />
       </button>,
 
-      <audio id="audio-end" src={endSound} autostart="false" />,
-      <audio id="audio-start" src={startSound} autostart="false" />
+      <audio id="audio-end" key="audio-end" src={endSound} autostart="false" />,
+      <audio id="audio-start" key="audio-start" src={startSound} autostart="false" />
     ]
   }
 
