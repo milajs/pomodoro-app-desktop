@@ -2,16 +2,7 @@ import React, { PureComponent } from 'react'
 
 import Switcher from '../UI/Switcher'
 
-const storage = window.require('electron-json-storage')
-
-function getDataFromStorage(key) {
-  return new Promise((resolve, reject) => {
-    storage.get(key, (err, data) => {
-        if (err) reject(err)
-        resolve(data)
-    })
-  })
-}
+import { getDataFromStorage, setDataToStorage } from '../../utils/storage'
 
 export default class SettingsContainer extends PureComponent {
   constructor(props) {
@@ -22,11 +13,10 @@ export default class SettingsContainer extends PureComponent {
     }
   }
 
-  async componentDidMount() {
-    const data = await getDataFromStorage('settings')
-    console.log(data)
-
-    this.setState({ autoStartAfterBreak: data.autoStartAfterBreak })
+  componentDidMount() {
+    getDataFromStorage('settings').then((data) => {
+      this.setState({ autoStartAfterBreak: data.autoStartAfterBreak })
+    })
   }
 
   render() {
@@ -48,7 +38,7 @@ export default class SettingsContainer extends PureComponent {
 
   toggleAutoStartAfterBreak = (active) => {
     this.setState({ autoStartAfterBreak: active }, () => {
-      storage.set('settings', { autoStartAfterBreak: active })
+      setDataToStorage('settings', { autoStartAfterBreak: active })
     })
   }
 }
