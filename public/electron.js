@@ -40,9 +40,9 @@ function createWindow() {
     mainWindow.show()
     mainWindow.focus()
 
-    globalShortcut.register('CommandOrControl+T', () => {
-      if (mainWindow) { mainWindow.focus() }
-    })
+    // globalShortcut.register('CommandOrControl+T', () => {
+    //   if (mainWindow) { mainWindow.focus() }
+    // })
   })
 
   mainWindow.on('focus', () => {
