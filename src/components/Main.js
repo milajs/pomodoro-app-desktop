@@ -12,9 +12,6 @@ import { WORK_TIME, RELAX_TIME } from '../constants'
 
 const { ipcRenderer } = window.require("electron")
 
-const startSound = require('../assets/pomodoro-start.mp3')
-const endSound = require('../assets/pomodoro-end.mp3')
-
 const INITIAL_TIME = formatTimeToString(WORK_TIME)
 
 function resetTrayTime() {
@@ -81,10 +78,7 @@ export default class MainContainer extends PureComponent {
 
       <button key="settingsButton" className="settingsButton" onClick={this.toggleScreen}>
         <GearIcon />
-      </button>,
-
-      <audio id="audio-end" key="audio-end" src={endSound} autostart="false" />,
-      <audio id="audio-start" key="audio-start" src={startSound} autostart="false" />
+      </button>
     ]
   }
 
@@ -101,10 +95,6 @@ export default class MainContainer extends PureComponent {
       if (this.state.active) {
         ipcRenderer.send('update-workt-status', 'Stop', time)
 
-        // if (this.state.time === WORK_TIME) {
-        //   document.getElementById('audio-start').play()
-        // }
-
         this.timer = setInterval(this.tick, 1000)
       } else {
         ipcRenderer.send('update-workt-status', 'Start', time)
@@ -118,8 +108,6 @@ export default class MainContainer extends PureComponent {
       const isPomodoroEnd = this.props.stage === 'work'
 
       if (isPomodoroEnd) {
-        document.getElementById('audio-end').play()
-
         new Notification('Break!', {
           body: 'Current Pomodoro has ended'
         })
