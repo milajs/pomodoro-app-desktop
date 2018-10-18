@@ -6,6 +6,7 @@ import Settings from './Settings'
 import GearIcon from '../icons/gear'
 
 import { formatTimeToString, getNewSeries } from '../utils/timer'
+import { getDataFromStorage } from '../utils/storage'
 
 import { WORK_TIME, RELAX_TIME } from '../constants'
 
@@ -125,14 +126,29 @@ export default class MainContainer extends PureComponent {
       const time = isPomodoroEnd ? RELAX_TIME : WORK_TIME
       const series = getNewSeries(this.props.stage, this.state.series)
 
-      this.setState({ total, time, active: isPomodoroEnd, series }, () => {
-        this.props.toggleStage(stage)
-        ipcRenderer.send('update-stage', stage, formatTimeToString(time))
-      })
+      const newState = { total, time, series }
+
+      getDataFromStorage('settings')
+        .then((data) => {
+          this.setState({ ...newState, active: isPomodoroEnd ? true : data.autoStartAfterBreak }, () => {
+            if (!isPomodoroEnd && !data.autoStartAfterBreak) {
+              clearInterval(this.timer)
+            }
+          })
+        })
+        .catch(() => {
+          this.setState({ ...newState, active: isPomodoroEnd }, () => {
+            if (!isPomodoroEnd) {
+              clearInterval(this.timer)
+            }
+          })
+        })
+
+      this.props.toggleStage(stage)
+      ipcRenderer.send('update-stage', stage, formatTimeToString(time))
 
       if (!isPomodoroEnd) {
         ipcRenderer.send('update-workt-status', 'Start', INITIAL_TIME)
-        clearInterval(this.timer)
       }
     } else {
       const newTime = this.state.time - 1

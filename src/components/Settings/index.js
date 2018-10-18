@@ -20,7 +20,6 @@ export default class SettingsContainer extends PureComponent {
   }
 
   render() {
-    console.log(this.state.autoStartAfterBreak)
     return (
       <div className="settingsContainer">
         <h1>Settings</h1>
