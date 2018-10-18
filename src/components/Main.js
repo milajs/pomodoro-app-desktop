@@ -119,6 +119,10 @@ export default class MainContainer extends PureComponent {
 
       if (isPomodoroEnd) {
         document.getElementById('audio-end').play()
+
+        new Notification('Break!', {
+          body: 'Current Pomodoro has ended'
+        })
       }
 
       const stage = isPomodoroEnd ? 'relax' : 'work'
@@ -149,6 +153,10 @@ export default class MainContainer extends PureComponent {
 
       if (!isPomodoroEnd) {
         ipcRenderer.send('update-workt-status', 'Start', INITIAL_TIME)
+
+        new Notification('Lets work!', {
+          body: 'Break time is over'
+        })
       }
     } else {
       const newTime = this.state.time - 1
