@@ -3,6 +3,7 @@
 @import  './settings.css';
 @import  './animation.css';
 @import './switcher.css';
+@import './counter.css';
 
 .workScheme {
   --main-color: #E53935;

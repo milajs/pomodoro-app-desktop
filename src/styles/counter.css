@@ -1,0 +1,33 @@
+.counterContainer {
+  display: flex;
+  width: 100px;
+}
+
+.counterBtn {
+  width: 35px;
+  height: 35px;
+  background: var(--main-color);
+  color: white;
+  font-size: 22px;
+  font-weight: 500;
+  padding-top: 0px;
+}
+
+.counterBtn:first-child {
+  border-top-left-radius: 7px;
+  border-bottom-left-radius: 7px;
+}
+
+.counterBtn:last-child {
+  border-top-right-radius: 7px;
+  border-bottom-right-radius: 7px;
+}
+
+.counterBody {
+  width: 40px;
+  height: 33px;
+  line-height: 33px;
+  text-align: center;
+  border-top: 1px solid var(--main-color);
+  border-bottom: 1px solid var(--main-color);
+}

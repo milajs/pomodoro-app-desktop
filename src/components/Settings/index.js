@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 
 import Switcher from '../UI/Switcher'
+import Counter from '../UI/Counter'
 
 import { getDataFromStorage, setDataToStorage } from '../../utils/storage'
 
@@ -23,6 +24,18 @@ export default class SettingsContainer extends PureComponent {
     return (
       <div className="settingsContainer">
         <h1>Settings</h1>
+
+        <div className="setingsItem">
+          <p>Total goal</p>
+          <Counter />
+        </div>
+
+        <div className="setingsItem">
+          <p>Pomodoro per series</p>
+          <Counter />
+        </div>
+
+        <div className="delimeter" />
 
         <div className="setingsItem">
           <p>Auto start after break</p>
