@@ -27,12 +27,12 @@ export default class SettingsContainer extends PureComponent {
 
         <div className="setingsItem">
           <p>Total goal</p>
-          <Counter />
+          <Counter max={48} defaultValue={12} />
         </div>
 
         <div className="setingsItem">
           <p>Pomodoro per series</p>
-          <Counter />
+          <Counter max={6} defaultValue={4} />
         </div>
 
         <div className="delimeter" />

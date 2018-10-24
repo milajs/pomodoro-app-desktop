@@ -1,23 +1,40 @@
 import React, { PureComponent } from 'react'
 
 export default class Switcher extends PureComponent {
+  static defaultProps = {
+    max: 99,
+    defaultValue: 0
+  }
+
   constructor(props) {
     super(props)
 
     this.state = {
-      count: 12
+      count: props.defaultValue
     }
   }
 
   render() {
-    const { count } = this.state
-
     return (
       <div className="counterContainer">
-        <button className="counterBtn">-</button>
-        <div className="counterBody">{count}</div>
-        <button className="counterBtn">+</button>
+        <button className="counterBtn" onClick={this.decrease}>-</button>
+
+        <div className="counterBody">{this.state.count}</div>
+
+        <button className="counterBtn" onClick={this.increase}>+</button>
       </div>
     )
+  }
+
+  increase = () => {
+    if (this.state.count + 1 <= this.props.max) {
+      this.setState({ count: this.state.count + 1 })
+    }
+  }
+
+  decrease = () => {
+    if (this.state.count - 1 >= 0) {
+      this.setState({ count: this.state.count - 1 })
+    }
   }
 }
