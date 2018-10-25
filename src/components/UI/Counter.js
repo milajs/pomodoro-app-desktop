@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react'
 
 export default class Switcher extends PureComponent {
   static defaultProps = {
+    min: 0,
     max: 99,
     defaultValue: 0
   }
@@ -28,12 +29,12 @@ export default class Switcher extends PureComponent {
 
   increase = () => {
     if (this.state.count + 1 <= this.props.max) {
-      this.setState({ count: this.state.count + 1 })
+      this.setState({ count: this.state.count + 1 }, )
     }
   }
 
   decrease = () => {
-    if (this.state.count - 1 >= 0) {
+    if (this.state.count - 1 >= this.props.min) {
       this.setState({ count: this.state.count - 1 })
     }
   }
