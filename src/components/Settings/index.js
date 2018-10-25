@@ -27,12 +27,21 @@ export default class SettingsContainer extends PureComponent {
 
         <div className="setingsItem">
           <p>Total goal</p>
-          <Counter max={48} defaultValue={12} />
+          <Counter
+            max={48}
+            defaultValue={12}
+            onInput={this.updateTotalGoal}
+          />
         </div>
 
         <div className="setingsItem">
           <p>Pomodoro per series</p>
-          <Counter max={6} min={2} defaultValue={4} />
+          <Counter
+            max={6}
+            min={2}
+            defaultValue={4}
+            onInput={this.updateSeriesCount}
+          />
         </div>
 
         <div className="delimeter" />
@@ -41,7 +50,7 @@ export default class SettingsContainer extends PureComponent {
           <p>Auto start after break</p>
           <Switcher
             active={this.state.autoStartAfterBreak}
-            onPress={this.toggleAutoStartAfterBreak}
+            onToggle={this.toggleAutoStartAfterBreak}
           />
         </div>
       </div>
@@ -52,5 +61,11 @@ export default class SettingsContainer extends PureComponent {
     this.setState({ autoStartAfterBreak: active }, () => {
       setDataToStorage('settings', { autoStartAfterBreak: active })
     })
+  }
+
+  updateTotalGoal = () => {
+  }
+
+  updateSeriesCount = () => {
   }
 }

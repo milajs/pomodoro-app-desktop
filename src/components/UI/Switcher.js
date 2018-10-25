@@ -31,7 +31,7 @@ export default class Switcher extends PureComponent {
     const active = !this.state.active
 
     this.setState({ active }, () => {
-      this.props.onPress(active)
+      this.props.onToggle(active)
     })
   }
 }

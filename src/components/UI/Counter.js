@@ -28,14 +28,24 @@ export default class Switcher extends PureComponent {
   }
 
   increase = () => {
-    if (this.state.count + 1 <= this.props.max) {
-      this.setState({ count: this.state.count + 1 }, )
+    const count = this.state.count + 1
+
+    if (count <= this.props.max) {
+      this.updateCount(count)
     }
   }
 
   decrease = () => {
-    if (this.state.count - 1 >= this.props.min) {
-      this.setState({ count: this.state.count - 1 })
+    const count = this.state.count - 1
+
+    if (count >= this.props.min) {
+      this.updateCount(count)
     }
+  }
+
+  updateCount = (count) => {
+    this.setState({ count }, () => {
+      this.props.onInput(count)
+    })
   }
 }
