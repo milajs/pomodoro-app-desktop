@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 
-import Switcher from '../UI/Switcher'
+import Toggle from '../UI/Toggle'
 import Counter from '../UI/Counter'
 
 import { getDataFromStorage, setDataToStorage } from '../../utils/storage'
@@ -48,7 +48,7 @@ export default class SettingsContainer extends PureComponent {
 
         <div className="setingsItem">
           <p>Auto start after break</p>
-          <Switcher
+          <Toggle
             active={this.state.autoStartAfterBreak}
             onToggle={this.toggleAutoStartAfterBreak}
           />

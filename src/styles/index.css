@@ -4,6 +4,7 @@
 @import  './animation.css';
 @import './switcher.css';
 @import './counter.css';
+@import './toggle.css';
 
 .workScheme {
   --main-color: #E53935;
