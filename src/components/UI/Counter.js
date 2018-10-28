@@ -15,6 +15,14 @@ export default class Switcher extends PureComponent {
     }
   }
 
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (prevState.defaultValue !== nextProps.defaultValue) {
+      return { count: nextProps.defaultValue }
+    }
+
+    return null
+  }
+
   render() {
     return (
       <div className="counterContainer">

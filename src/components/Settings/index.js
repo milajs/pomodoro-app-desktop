@@ -10,13 +10,17 @@ export default class SettingsContainer extends PureComponent {
     super(props)
 
     this.state = {
-      autoStartAfterBreak: false
+      autoStartAfterBreak: false,
+      totalGoal: 12
     }
   }
 
   componentDidMount() {
     getDataFromStorage('settings').then((data) => {
-      this.setState({ autoStartAfterBreak: data.autoStartAfterBreak })
+      this.setState({
+        autoStartAfterBreak: data.autoStartAfterBreak,
+        totalGoal: data.totalGoal
+      })
     })
   }
 
@@ -29,8 +33,8 @@ export default class SettingsContainer extends PureComponent {
           <p>Total goal</p>
           <Counter
             max={48}
-            defaultValue={12}
             onInput={this.updateTotalGoal}
+            defaultValue={this.state.totalGoal}
           />
         </div>
 
@@ -59,11 +63,20 @@ export default class SettingsContainer extends PureComponent {
 
   toggleAutoStartAfterBreak = (active) => {
     this.setState({ autoStartAfterBreak: active }, () => {
-      setDataToStorage('settings', { autoStartAfterBreak: active })
+      setDataToStorage('settings', {
+        autoStartAfterBreak: active,
+        totalGoal: this.state.totalGoal
+      })
     })
   }
 
-  updateTotalGoal = () => {
+  updateTotalGoal = (totalGoal) => {
+    this.setState({ totalGoal }, () => {
+      setDataToStorage('settings', {
+        totalGoal,
+        autoStartAfterBreak: this.state.autoStartAfterBreak
+      })
+    })
   }
 
   updateSeriesCount = () => {

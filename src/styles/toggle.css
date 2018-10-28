@@ -1,11 +1,11 @@
 .toggleBtn {
-  width: 45px;
+  width: 50px;
   height: 35px;
   font-size: 14px;
   color: var(--main-color);
   background: white;
   border: 1px solid var(--main-color);
-  transition: 0.3s;
+  transition: 0.25s;
 }
 
 .toggleBtn:first-child {
