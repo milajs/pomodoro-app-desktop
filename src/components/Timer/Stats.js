@@ -2,12 +2,10 @@ import React from 'react'
 
 const tomato = require('../../assets/tomato.png')
 
-const TOTAL = 12
-
-export default function Stats({ total, series }) {
+export default function Stats({ total, series, totalGoal }) {
   const icon = <img src={tomato} alt="tomato" />
 
-  const totalPart = total / TOTAL
+  const totalPart = total / totalGoal
   const width = totalPart > 1 ? '300px' : `${totalPart * 300}px`
 
   return [
@@ -26,7 +24,7 @@ export default function Stats({ total, series }) {
     </div>,
 
     <p className="seriesTitle" key="total-title">
-      Total: {total} / {TOTAL}
+      Total: {total} / {totalGoal}
     </p>,
 
     <div className="totalRow" key="total-row">

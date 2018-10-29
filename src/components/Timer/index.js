@@ -35,7 +35,11 @@ export default class TimernContainer extends PureComponent {
           </CSSTransition>
         </div>
 
-        <Stats total={this.props.total} series={this.props.series} />
+        <Stats
+          total={this.props.total}
+          series={this.props.series}
+          totalGoal={this.props.totalGoal}
+        />
       </div>
     )
   }

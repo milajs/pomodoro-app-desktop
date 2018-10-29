@@ -6,7 +6,7 @@ import Settings from './Settings'
 import GearIcon from '../icons/gear'
 
 import { formatTimeToString, getNewSeries } from '../utils/timer'
-import { getDataFromStorage } from '../utils/storage'
+import { getDataFromStorage, setDataToStorage } from '../utils/storage'
 
 import { WORK_TIME, RELAX_TIME } from '../constants'
 
@@ -30,7 +30,10 @@ export default class MainContainer extends PureComponent {
   constructor(props) {
     super(props)
 
-    this.state = initialState
+    this.state = {
+      ...initialState,
+      totalGoal: 12
+    }
   }
 
   componentDidMount() {
@@ -44,6 +47,12 @@ export default class MainContainer extends PureComponent {
 
     ipcRenderer.on('skip-break', () => {
       this.skipBreak()
+    })
+
+    getDataFromStorage('settings').then((data) => {
+      this.setState({
+        totalGoal: data.totalGoal
+      })
     })
   }
 
@@ -63,6 +72,7 @@ export default class MainContainer extends PureComponent {
           series={this.state.series}
           active={this.state.active}
           toggleTimer={this.toggleTimer}
+          totalGoal={this.state.totalGoal}
         />
       </CSSTransition>,
 
@@ -73,7 +83,10 @@ export default class MainContainer extends PureComponent {
         classNames="translateOut"
         in={this.state.screen === 'settings'}
       >
-        <Settings />
+        <Settings
+          totalGoal={this.state.totalGoal}
+          updateTotalGoal={this.updateTotalGoal}
+        />
       </CSSTransition>,
 
       <button key="settingsButton" className="settingsButton" onClick={this.toggleScreen}>
@@ -164,7 +177,7 @@ export default class MainContainer extends PureComponent {
   }
 
   resetTimer = () => {
-    this.setState(initialState, () => {
+    this.setState({ initialState }, () => {
       this.clearTimer()
     })
   }
@@ -172,5 +185,11 @@ export default class MainContainer extends PureComponent {
   clearTimer = () => {
     clearInterval(this.timer)
     resetTrayTime()
+  }
+
+  updateTotalGoal = (data) => {
+    this.setState({ totalGoal: data.totalGoal }, () => {
+      setDataToStorage('settings', data)
+    })
   }
 }
