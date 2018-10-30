@@ -72,6 +72,7 @@ export default class MainContainer extends PureComponent {
           total={this.state.total}
           series={this.state.series}
           active={this.state.active}
+          skipBreak={this.skipBreak}
           toggleTimer={this.toggleTimer}
           totalGoal={this.state.totalGoal}
           fullSeries={this.state.fullSeries}
