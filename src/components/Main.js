@@ -26,14 +26,17 @@ const initialState = {
   screen: 'timer'
 }
 
+const TOTAL_GOAL = 12
+const FULL_SERIES = 4
+
 export default class MainContainer extends PureComponent {
   constructor(props) {
     super(props)
 
     this.state = {
       ...initialState,
-      totalGoal: 12,
-      fullSeries: 4
+      totalGoal: TOTAL_GOAL,
+      fullSeries: FULL_SERIES
     }
   }
 
@@ -52,7 +55,8 @@ export default class MainContainer extends PureComponent {
 
     getDataFromStorage('settings').then((data) => {
       this.setState({
-        totalGoal: data.totalGoal
+        totalGoal: data.totalGoal || TOTAL_GOAL,
+        fullSeries: data.fullSeries || FULL_SERIES
       })
     })
   }
