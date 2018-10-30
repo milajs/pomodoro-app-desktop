@@ -41,8 +41,8 @@ export default class SettingsContainer extends PureComponent {
           <Counter
             max={6}
             min={2}
-            defaultValue={4}
             onInput={this.updateSeriesCount}
+            defaultValue={this.props.fullSeries}
           />
         </div>
 

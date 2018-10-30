@@ -12,7 +12,6 @@ import { WORK_TIME, RELAX_TIME } from '../constants'
 
 const { ipcRenderer } = window.require("electron")
 
-// const INITIAL_TIME = formatTimeToString(WORK_TIME)
 const INITIAL_TIME = '--:--'
 
 function resetTrayTime() {
@@ -33,7 +32,8 @@ export default class MainContainer extends PureComponent {
 
     this.state = {
       ...initialState,
-      totalGoal: 12
+      totalGoal: 12,
+      fullSeries: 4
     }
   }
 
@@ -74,6 +74,7 @@ export default class MainContainer extends PureComponent {
           active={this.state.active}
           toggleTimer={this.toggleTimer}
           totalGoal={this.state.totalGoal}
+          fullSeries={this.state.fullSeries}
         />
       </CSSTransition>,
 
@@ -86,6 +87,7 @@ export default class MainContainer extends PureComponent {
       >
         <Settings
           totalGoal={this.state.totalGoal}
+          fullSeries={this.state.fullSeries}
           updateTotalGoal={this.updateTotalGoal}
         />
       </CSSTransition>,

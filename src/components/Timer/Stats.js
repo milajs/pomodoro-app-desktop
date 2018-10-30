@@ -2,11 +2,15 @@ import React from 'react'
 
 const tomato = require('../../assets/tomato.png')
 
-export default function Stats({ total, series, totalGoal }) {
+export default function Stats({ total, series, totalGoal, fullSeries }) {
   const icon = <img src={tomato} alt="tomato" />
 
   const totalPart = total / totalGoal
   const width = totalPart > 1 ? '300px' : `${totalPart * 300}px`
+
+  const seriesList = [...Array(fullSeries).keys()].map((key) => {
+    return series > key ? icon : <div className="series" />
+  })
 
   return [
     <p className="seriesTitle" key="series-title">
@@ -14,13 +18,7 @@ export default function Stats({ total, series, totalGoal }) {
     </p>,
 
     <div className="seriesRow" key="series-row">
-      {series > 0 ? icon : <div className="series" />}
-
-      {series > 1 ? icon : <div className="series" />}
-
-      {series > 2 ? icon : <div className="series" />}
-
-      {series > 3 ? icon : <div className="series" />}
+      {seriesList}
     </div>,
 
     <p className="seriesTitle" key="total-title">

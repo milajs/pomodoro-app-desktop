@@ -39,6 +39,7 @@ export default class TimernContainer extends PureComponent {
           total={this.props.total}
           series={this.props.series}
           totalGoal={this.props.totalGoal}
+          fullSeries={this.props.fullSeries}
         />
       </div>
     )
