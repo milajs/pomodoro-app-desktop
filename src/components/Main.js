@@ -90,6 +90,7 @@ export default class MainContainer extends PureComponent {
           totalGoal={this.state.totalGoal}
           fullSeries={this.state.fullSeries}
           updateTotalGoal={this.updateTotalGoal}
+          updateFullSeries={this.updateFullSeries}
         />
       </CSSTransition>,
 
@@ -193,6 +194,12 @@ export default class MainContainer extends PureComponent {
 
   updateTotalGoal = (data) => {
     this.setState({ totalGoal: data.totalGoal }, () => {
+      setDataToStorage('settings', data)
+    })
+  }
+
+  updateFullSeries = (data) => {
+    this.setState({ fullSeries: data.fullSeries }, () => {
       setDataToStorage('settings', data)
     })
   }

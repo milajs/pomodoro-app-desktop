@@ -41,7 +41,7 @@ export default class SettingsContainer extends PureComponent {
           <Counter
             max={6}
             min={2}
-            onInput={this.updateSeriesCount}
+            onInput={this.updateFullSeries}
             defaultValue={this.props.fullSeries}
           />
         </div>
@@ -63,7 +63,8 @@ export default class SettingsContainer extends PureComponent {
     this.setState({ autoStartAfterBreak: active }, () => {
       setDataToStorage('settings', {
         autoStartAfterBreak: active,
-        totalGoal: this.props.totalGoal
+        totalGoal: this.props.totalGoal,
+        fullSeries: this.props.fullSeries
       })
     })
   }
@@ -71,10 +72,16 @@ export default class SettingsContainer extends PureComponent {
   updateTotalGoal = (totalGoal) => {
     this.props.updateTotalGoal({
       totalGoal,
+      fullSeries: this.props.fullSeries,
       autoStartAfterBreak: this.state.autoStartAfterBreak
     })
   }
 
-  updateSeriesCount = () => {
+  updateFullSeries = (fullSeries) => {
+    this.props.updateFullSeries({
+      fullSeries,
+      totalGoal: this.props.totalGoal,
+      autoStartAfterBreak: this.state.autoStartAfterBreak
+    })
   }
 }
