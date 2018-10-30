@@ -140,7 +140,7 @@ function createTray() {
 
   tray.setToolTip('This is my application.')
   tray.setContextMenu(contextMenu)
-  tray.setTitle('25:00')
+  tray.setTitle('--:--')
 }
 
 function updateTray(contextMenu, time) {

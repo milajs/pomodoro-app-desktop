@@ -12,7 +12,8 @@ import { WORK_TIME, RELAX_TIME } from '../constants'
 
 const { ipcRenderer } = window.require("electron")
 
-const INITIAL_TIME = formatTimeToString(WORK_TIME)
+// const INITIAL_TIME = formatTimeToString(WORK_TIME)
+const INITIAL_TIME = '--:--'
 
 function resetTrayTime() {
   ipcRenderer.send('reset-tray-action', INITIAL_TIME)
