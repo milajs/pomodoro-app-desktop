@@ -40,9 +40,9 @@ function createWindow() {
     mainWindow.show()
     mainWindow.focus()
 
-    // globalShortcut.register('CommandOrControl+T', () => {
-    //   if (mainWindow) { mainWindow.focus() }
-    // })
+    globalShortcut.register('Command+Control+P', () => {
+      if (mainWindow) { mainWindow.focus() }
+    })
   })
 
   mainWindow.on('focus', () => {
@@ -70,6 +70,8 @@ function createWindow() {
 
   mainWindow.on('closed', () => {
     mainWindow = null
+
+    globalShortcut.unregister('Command+Control+P')
   })
 }
 

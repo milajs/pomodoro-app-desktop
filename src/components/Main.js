@@ -22,8 +22,7 @@ const initialState = {
   series: 0,
   total: 0,
   active: false,
-  time: WORK_TIME,
-  screen: 'timer'
+  time: WORK_TIME
 }
 
 const TOTAL_GOAL = 12
@@ -35,6 +34,7 @@ export default class MainContainer extends PureComponent {
 
     this.state = {
       ...initialState,
+      screen: 'timer',
       totalGoal: TOTAL_GOAL,
       fullSeries: FULL_SERIES
     }
@@ -186,7 +186,8 @@ export default class MainContainer extends PureComponent {
   }
 
   resetTimer = () => {
-    this.setState({ initialState }, () => {
+    this.setState({ ...initialState }, () => {
+      this.props.toggleStage('work')
       this.clearTimer()
     })
   }
