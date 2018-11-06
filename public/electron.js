@@ -8,6 +8,9 @@ const { app, BrowserWindow, ipcMain, globalShortcut, Menu, nativeImage, Tray } =
 let mainWindow
 let tray
 
+const trayIcon = path.join(__dirname, '/trayicon.png')
+const trayIconGreen = path.join(__dirname, '/trayicon_green.png')
+
 function registerShortcuts() {
   globalShortcut.register('CommandOrControl+S', () => {
     if (mainWindow) { mainWindow.webContents.send('toggle-timer') }
@@ -134,13 +137,11 @@ const menuItems = [
 ]
 
 function createTray() {
-  tray = new Tray(nativeImage
-    .createFromPath(path.join(__dirname, '/trayicon.png'))
-    .resize({ width: 16, height: 16 }))
+  tray = new Tray(nativeImage.createFromPath(trayIcon).resize({ width: 16, height: 16 }))
 
   const contextMenu = Menu.buildFromTemplate(menuItems)
 
-  tray.setToolTip('This is my application.')
+  tray.setToolTip('Pomodoro app')
   tray.setContextMenu(contextMenu)
   tray.setTitle('--:--')
 }
@@ -169,13 +170,17 @@ ipcMain.on('update-workt-status', (event, label, time) => {
 })
 
 ipcMain.on('update-stage', (event, stage, time) => {
+  const isRelax = stage === 'relax'
   const skipButtonIndex = menuItems.findIndex(item => item.selector === 'skip')
 
-  menuItems[skipButtonIndex].enabled = stage === 'relax'
+  menuItems[skipButtonIndex].enabled = isRelax
 
   const contextMenu = Menu.buildFromTemplate(menuItems)
 
   updateTray(contextMenu, time)
+
+  const newIcon = isRelax ? trayIconGreen : trayIcon
+  tray.setImage(nativeImage.createFromPath(newIcon).resize({ width: 16, height: 16 }))
 })
 
 ipcMain.on('reset-tray-action', (event, time) => {
