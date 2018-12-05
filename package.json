@@ -1,6 +1,6 @@
 {
   "name": "pomodoro-app-desktop",
-  "productName": "Pomodoro Timer",
+  "productName": "Tomater",
   "version": "0.1.0",
   "author": "LyudmilaPro",
   "private": true,
@@ -17,7 +17,7 @@
   },
   "build": {
     "appId": "com.example.electron-cra",
-    "productName": "Pomodoro Timer",
+    "productName": "Tomater",
     "files": [
       "build/**/*",
       "node_modules/**/*"

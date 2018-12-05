@@ -4,6 +4,6 @@ module.exports = {
   height: 720,
   minWidth: 350,
   minHeight: 720,
-  title: 'Pomodoro Timer',
+  title: 'Tomater',
   titleBarStyle: 'hidden'
 }
