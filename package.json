@@ -1,7 +1,7 @@
 {
   "name": "pomodoro-app-desktop",
   "productName": "Tomater",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "author": "LyudmilaPro",
   "private": true,
   "main": "public/electron.js",
@@ -41,7 +41,7 @@
   "devDependencies": {
     "babel-eslint": "^7.2.3",
     "concurrently": "^3.6.1",
-    "electron": "^2.0.5",
+    "electron": "3.0.10",
     "electron-builder": "^20.26.0",
     "eslint": "^4.19.1",
     "eslint-config-react-app": "^2.1.0",
