@@ -16,3 +16,10 @@ yarn electron-dev
 ```
 yarn electron-pack
 ```
+
+
+## Release build
+
+```
+yarn release
+```
