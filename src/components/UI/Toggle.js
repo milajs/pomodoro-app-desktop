@@ -22,11 +22,17 @@ export default class Switcher extends PureComponent {
 
     return (
       <div className="toggleContainer">
-        <button className={`toggleBtn${active ? ' toggleBtn_active' : ''}`} onClick={this.toggleActive(true)}>
+        <button
+          className={`toggleBtn${active ? ' toggleBtn_active' : ''}`}
+          onClick={this.toggleActive(true)}
+        >
           On
         </button>
 
-        <button className={`toggleBtn${!active ? ' toggleBtn_active' : ''}`} onClick={this.toggleActive(false)}>
+        <button
+          className={`toggleBtn${!active ? ' toggleBtn_active' : ''}`}
+          onClick={this.toggleActive(false)}
+        >
           Off
         </button>
       </div>
