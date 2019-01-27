@@ -19,18 +19,7 @@
     "max-len": [2, 120],
     "jsx-a11y/media-has-caption": 0,
     "react/jsx-filename-extension": 0,
-    "react/prop-types": 0,
-    "react/sort-comp": [
-      2,
-      {
-        "order": [
-          "static-methods",
-          "lifecycle",
-          "render",
-          "everything-else"
-        ]
-      }
-    ]
+    "react/prop-types": 0
   },
   "globals": {
     "localStorage": false,
