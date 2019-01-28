@@ -21,7 +21,10 @@ export default class Switcher extends PureComponent {
     const { active } = this.state
 
     return (
-      <button className={`switcherContainer${active ? ' switcherContainer_active' : ''}`} onClick={this.toggleActive}>
+      <button
+        className={`switcherContainer${active ? ' switcherContainer_active' : ''}`}
+        onClick={this.toggleActive}
+      >
         <div className={`switcherTumblr${active ? ' switcherTumblr_active' : ''}`} />
       </button>
     )

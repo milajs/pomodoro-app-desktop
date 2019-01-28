@@ -1,8 +1,6 @@
-const initialState = [
-  {
-    autoStartAfterBreak: false
-  }
-]
+const initialState = {
+  autoStartAfterBreak: false
+}
 
 export default function todos(state = initialState, action) {
   switch (action.type) {

@@ -1,11 +1,18 @@
 import React, { PureComponent } from 'react'
+import { connect } from "react-redux"
 
 import Toggle from '../UI/Toggle'
 import Counter from '../UI/Counter'
 
 import { getDataFromStorage, setDataToStorage } from '../../utils/storage'
 
-export default class SettingsContainer extends PureComponent {
+const mapStateToProps = state => {
+  return {
+    settings: state.settings
+  }
+}
+
+class SettingsContainer extends PureComponent {
   constructor(props) {
     super(props)
 
@@ -23,6 +30,7 @@ export default class SettingsContainer extends PureComponent {
   }
 
   render() {
+    console.log(this.props)
     return (
       <div className="settingsContainer">
         <h1>Settings</h1>
@@ -85,3 +93,5 @@ export default class SettingsContainer extends PureComponent {
     })
   }
 }
+
+export default connect(mapStateToProps)(SettingsContainer)
