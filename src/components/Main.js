@@ -8,11 +8,9 @@ import GearIcon from '../icons/gear'
 import { formatTimeToString, getNewSeries } from '../utils/timer'
 import { getDataFromStorage, setDataToStorage } from '../utils/storage'
 
-import { WORK_TIME, RELAX_TIME } from '../constants'
+import { WORK_TIME, RELAX_TIME, INITIAL_TIME } from '../constants'
 
 const { ipcRenderer } = window.require("electron")
-
-const INITIAL_TIME = '--:--'
 
 function resetTrayTime() {
   ipcRenderer.send('reset-tray-action', INITIAL_TIME)

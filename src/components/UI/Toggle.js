@@ -1,24 +1,8 @@
 import React, { PureComponent } from 'react'
 
 export default class Switcher extends PureComponent {
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      active: props.active
-    }
-  }
-
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if (prevState.active !== nextProps.active) {
-      return { active: nextProps.active }
-    }
-
-    return null
-  }
-
   render() {
-    const { active } = this.state
+    const { active } = this.props
 
     return (
       <div className="toggleContainer">
@@ -40,8 +24,6 @@ export default class Switcher extends PureComponent {
   }
 
   toggleActive = (active) => () => {
-    this.setState({ active }, () => {
-      this.props.onToggle(active)
-    })
+    this.props.onToggle(active)
   }
 }
