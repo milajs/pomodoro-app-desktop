@@ -1,8 +1,10 @@
 import React, { PureComponent } from 'react'
-import { connect } from "react-redux"
+import { connect } from 'react-redux'
 
 import Toggle from '../UI/Toggle'
 import Counter from '../UI/Counter'
+
+import { updateSettings } from '../../actions/settings'
 
 import { getDataFromStorage, setDataToStorage } from '../../utils/storage'
 
@@ -11,6 +13,12 @@ const mapStateToProps = state => {
     settings: state.settings
   }
 }
+
+const mapDispatchToProps = dispatch => ({
+  updateSettings(settings) {
+    dispatch(updateSettings(settings))
+  }
+})
 
 class SettingsContainer extends PureComponent {
   constructor(props) {
@@ -30,7 +38,6 @@ class SettingsContainer extends PureComponent {
   }
 
   render() {
-    console.log(this.props)
     return (
       <div className="settingsContainer">
         <h1>Settings</h1>
@@ -74,6 +81,7 @@ class SettingsContainer extends PureComponent {
         totalGoal: this.props.totalGoal,
         fullSeries: this.props.fullSeries
       })
+      this.props.updateSettings({ autoStartAfterBreak: active })
     })
   }
 
@@ -94,4 +102,4 @@ class SettingsContainer extends PureComponent {
   }
 }
 
-export default connect(mapStateToProps)(SettingsContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(SettingsContainer)
