@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import { CSSTransition } from 'react-transition-group'
 
-import Timer from './Timer'
+import Timer from '../containers/Timer'
 import Settings from './Settings'
 import GearIcon from '../icons/gear'
 

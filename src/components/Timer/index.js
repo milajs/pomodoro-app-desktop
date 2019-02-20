@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react'
 import { CSSTransition } from 'react-transition-group'
-import { connect } from 'react-redux'
 
 import Timer from './Timer'
 import Stats from './Stats'
@@ -8,13 +7,7 @@ import Stats from './Stats'
 const playIcon = require('../../assets/play.png')
 const pauseIcon = require('../../assets/pause.png')
 
-const mapStateToProps = state => {
-  return {
-    settings: state.settings
-  }
-}
-
-class TimernContainer extends PureComponent {
+export default class TimernContainer extends PureComponent {
   render() {
     const src = this.props.active ? pauseIcon : playIcon
 
@@ -52,5 +45,3 @@ class TimernContainer extends PureComponent {
     )
   }
 }
-
-export default connect(mapStateToProps)(TimernContainer)
